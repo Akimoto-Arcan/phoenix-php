@@ -93,7 +93,10 @@
         <!-- Main Content -->
         <main class="main-content">
             <div class="topbar">
-                <h2 id="pageTitle">Dashboard</h2>
+                <div style="display:flex;align-items:center;gap:12px;">
+                    <button class="mobile-menu-toggle" onclick="toggleMobileMenu()"><i class="fas fa-bars"></i></button>
+                    <h2 id="pageTitle">Dashboard</h2>
+                </div>
                 <div class="topbar-actions">
                     <span style="color:var(--success); font-size:13px;"><i class="fas fa-circle" style="font-size:8px;"></i> System Online</span>
                     <button class="btn btn-sm btn-outline"><i class="fas fa-bell"></i></button>
@@ -901,8 +904,7 @@ $users = <span class="func">QueryCache</span>::<span class="func">query</span>($
         </main>
     </div>
 
-    <!-- Mobile menu toggle + overlay -->
-    <button class="mobile-menu-toggle" onclick="toggleMobileMenu()"><i class="fas fa-bars"></i></button>
+    <!-- Mobile overlay -->
     <div class="mobile-overlay" id="mobileOverlay" onclick="toggleMobileMenu()"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
