@@ -1,0 +1,49 @@
+{
+    "name": "cdac-programming/phoenix-php",
+    "description": "PhoenixPHP — A production-ready PHP framework with authentication, RBAC, multi-database management, REST API framework, caching, security hardening, and modular architecture. By CDAC Programming.",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Chris Carpenter",
+            "email": "relik86@gmail.com",
+            "homepage": "https://github.com/Akimoto-Arcan",
+            "role": "Developer"
+        }
+    ],
+    "keywords": [
+        "php",
+        "framework",
+        "mvc",
+        "rest-api",
+        "authentication",
+        "rbac",
+        "mysql",
+        "dashboard",
+        "production",
+        "enterprise"
+    ],
+    "require": {
+        "php": ">=7.4",
+        "vlucas/phpdotenv": "^5.5",
+        "phpmailer/phpmailer": "^6.8"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "Phoenix\\": "includes/"
+        },
+        "files": [
+            "bootstrap.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Phoenix\\Tests\\": "tests/"
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

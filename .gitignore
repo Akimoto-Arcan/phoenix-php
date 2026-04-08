@@ -1,0 +1,25 @@
+# Environment
+.env
+
+# Dependencies
+/vendor/
+/node_modules/
+
+# Cache and logs
+/cache/*
+!/cache/.gitkeep
+/logs/*
+!/logs/.gitkeep
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build
+/dist/
