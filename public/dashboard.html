@@ -52,8 +52,15 @@
                 <div class="nav-section">
                     <div class="nav-section-title">Marketplace</div>
                     <a href="#" class="nav-item" onclick="showPage('modules', this)">
-                        <i class="fas fa-puzzle-piece"></i> Modules
+                        <i class="fas fa-puzzle-piece"></i> Marketplace
                         <span class="nav-badge">6</span>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Modules</div>
+                    <a href="#" class="nav-item" onclick="showPage('inventory', this)">
+                        <i class="fas fa-boxes"></i> Inventory
                     </a>
                 </div>
 
@@ -511,6 +518,231 @@ $users = <span class="func">QueryCache</span>::<span class="func">query</span>($
             </div>
 
             <!-- ===== MODULES MARKETPLACE PAGE ===== -->
+            <!-- ===== INVENTORY MODULE DEMO ===== -->
+            <div id="page-inventory" class="content-area page-content" style="display:none;">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon green"><i class="fas fa-boxes"></i></div>
+                        <div class="stat-value">1,247</div>
+                        <div class="stat-label">Total Items</div>
+                        <div class="stat-change up"><i class="fas fa-arrow-up"></i> 24 added this week</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon amber"><i class="fas fa-exclamation-triangle"></i></div>
+                        <div class="stat-value">18</div>
+                        <div class="stat-label">Low Stock Alerts</div>
+                        <div class="stat-change down"><i class="fas fa-arrow-up"></i> 3 new since yesterday</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon blue"><i class="fas fa-truck-loading"></i></div>
+                        <div class="stat-value">42</div>
+                        <div class="stat-label">Pending Receipts</div>
+                        <div class="stat-change up"><i class="fas fa-clock"></i> 6 due today</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon red"><i class="fas fa-dollar-sign"></i></div>
+                        <div class="stat-value">$284K</div>
+                        <div class="stat-label">Inventory Value</div>
+                        <div class="stat-change up"><i class="fas fa-arrow-up"></i> 4.2% vs last month</div>
+                    </div>
+                </div>
+
+                <div class="grid-3">
+                    <!-- Inventory Items Table -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-list" style="color:var(--accent);margin-right:8px;"></i> Inventory Items</h3>
+                            <div style="display:flex;gap:8px;">
+                                <input class="form-control" placeholder="Search SKU, name..." style="width:200px;padding:8px 12px;font-size:13px;">
+                                <button class="btn btn-sm btn-primary"><i class="fas fa-plus"></i> Add Item</button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-wrapper">
+                                <table class="phoenix-table">
+                                    <thead>
+                                        <tr><th>SKU</th><th>Item Name</th><th>Category</th><th>Stock</th><th>Reorder Pt</th><th>Status</th><th>Value</th></tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><code>WDG-4420</code></td>
+                                            <td><strong>Steel Bracket Assembly</strong></td>
+                                            <td>Hardware</td>
+                                            <td>342</td>
+                                            <td>100</td>
+                                            <td><span class="badge badge-success">In Stock</span></td>
+                                            <td>$4,104</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>ELC-1180</code></td>
+                                            <td><strong>Control Board PCB v3</strong></td>
+                                            <td>Electronics</td>
+                                            <td>28</td>
+                                            <td>50</td>
+                                            <td><span class="badge badge-warning">Low Stock</span></td>
+                                            <td>$3,640</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>FLT-0095</code></td>
+                                            <td><strong>HEPA Filter Cartridge</strong></td>
+                                            <td>Consumables</td>
+                                            <td>156</td>
+                                            <td>75</td>
+                                            <td><span class="badge badge-success">In Stock</span></td>
+                                            <td>$5,460</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>BRG-2210</code></td>
+                                            <td><strong>Sealed Bearing 6205-2RS</strong></td>
+                                            <td>Mechanical</td>
+                                            <td>8</td>
+                                            <td>25</td>
+                                            <td><span class="badge badge-danger">Critical</span></td>
+                                            <td>$96</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>LBL-3300</code></td>
+                                            <td><strong>Thermal Label Roll 4x6</strong></td>
+                                            <td>Packaging</td>
+                                            <td>420</td>
+                                            <td>200</td>
+                                            <td><span class="badge badge-success">In Stock</span></td>
+                                            <td>$1,260</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>MTR-0550</code></td>
+                                            <td><strong>Stepper Motor NEMA 23</strong></td>
+                                            <td>Electronics</td>
+                                            <td>12</td>
+                                            <td>10</td>
+                                            <td><span class="badge badge-success">In Stock</span></td>
+                                            <td>$540</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>HSE-0070</code></td>
+                                            <td><strong>Hydraulic Hose 1/2" x 36"</strong></td>
+                                            <td>Mechanical</td>
+                                            <td>3</td>
+                                            <td>15</td>
+                                            <td><span class="badge badge-danger">Critical</span></td>
+                                            <td>$87</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:16px;padding-top:12px;border-top:1px solid var(--border);">
+                                <span style="font-size:12px;color:var(--text-muted);">Showing 1-7 of 1,247 items</span>
+                                <div style="display:flex;gap:4px;">
+                                    <button class="btn btn-sm btn-outline" disabled>&laquo;</button>
+                                    <button class="btn btn-sm btn-primary">1</button>
+                                    <button class="btn btn-sm btn-outline">2</button>
+                                    <button class="btn btn-sm btn-outline">3</button>
+                                    <button class="btn btn-sm btn-outline">...</button>
+                                    <button class="btn btn-sm btn-outline">178</button>
+                                    <button class="btn btn-sm btn-outline">&raquo;</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Activity -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-exchange-alt" style="color:var(--info);margin-right:8px;"></i> Recent Transactions</h3>
+                        </div>
+                        <div class="card-body">
+                            <ul class="activity-feed">
+                                <li class="activity-item">
+                                    <span class="activity-dot green"></span>
+                                    <div>
+                                        <div class="activity-text"><span class="badge badge-success" style="font-size:10px;margin-right:4px;">RECEIVED</span> <strong>150x</strong> Steel Bracket Assembly</div>
+                                        <div class="activity-time">PO-2026-0442 &bull; 12 min ago</div>
+                                    </div>
+                                </li>
+                                <li class="activity-item">
+                                    <span class="activity-dot blue"></span>
+                                    <div>
+                                        <div class="activity-text"><span class="badge badge-info" style="font-size:10px;margin-right:4px;">SHIPPED</span> <strong>24x</strong> HEPA Filter Cartridge</div>
+                                        <div class="activity-time">REF-88412 &bull; 45 min ago</div>
+                                    </div>
+                                </li>
+                                <li class="activity-item">
+                                    <span class="activity-dot amber"></span>
+                                    <div>
+                                        <div class="activity-text"><span class="badge badge-warning" style="font-size:10px;margin-right:4px;">ADJUSTED</span> <strong>Sealed Bearing 6205-2RS</strong> count corrected -2</div>
+                                        <div class="activity-time">Cycle count &bull; 1 hour ago</div>
+                                    </div>
+                                </li>
+                                <li class="activity-item">
+                                    <span class="activity-dot red"></span>
+                                    <div>
+                                        <div class="activity-text"><span class="badge badge-danger" style="font-size:10px;margin-right:4px;">ALERT</span> <strong>Hydraulic Hose</strong> below reorder point</div>
+                                        <div class="activity-time">Auto-alert &bull; 2 hours ago</div>
+                                    </div>
+                                </li>
+                                <li class="activity-item">
+                                    <span class="activity-dot green"></span>
+                                    <div>
+                                        <div class="activity-text"><span class="badge badge-success" style="font-size:10px;margin-right:4px;">RECEIVED</span> <strong>500x</strong> Thermal Label Roll</div>
+                                        <div class="activity-time">PO-2026-0440 &bull; 3 hours ago</div>
+                                    </div>
+                                </li>
+                                <li class="activity-item">
+                                    <span class="activity-dot blue"></span>
+                                    <div>
+                                        <div class="activity-text"><span class="badge badge-info" style="font-size:10px;margin-right:4px;">TRANSFER</span> <strong>6x</strong> Stepper Motor to Line 3</div>
+                                        <div class="activity-time">WH-01 → LINE-03 &bull; 4 hours ago</div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Purchase Orders + Suppliers -->
+                <div class="grid-2">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-file-invoice" style="color:var(--accent);margin-right:8px;"></i> Open Purchase Orders</h3>
+                            <button class="btn btn-sm btn-primary"><i class="fas fa-plus"></i> New PO</button>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-wrapper">
+                                <table class="phoenix-table">
+                                    <thead><tr><th>PO #</th><th>Supplier</th><th>Items</th><th>Total</th><th>Status</th><th>ETA</th></tr></thead>
+                                    <tbody>
+                                        <tr><td><strong>PO-2026-0445</strong></td><td>Allied Components</td><td>3</td><td>$2,450</td><td><span class="badge badge-info">Submitted</span></td><td>Apr 12</td></tr>
+                                        <tr><td><strong>PO-2026-0443</strong></td><td>FastParts Inc</td><td>5</td><td>$890</td><td><span class="badge badge-warning">Partial</span></td><td>Apr 10</td></tr>
+                                        <tr><td><strong>PO-2026-0441</strong></td><td>National Bearings</td><td>2</td><td>$1,200</td><td><span class="badge badge-info">Submitted</span></td><td>Apr 15</td></tr>
+                                        <tr><td><strong>PO-2026-0438</strong></td><td>Hydraulic Supply Co</td><td>1</td><td>$435</td><td><span class="badge badge-success">Received</span></td><td>Delivered</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-handshake" style="color:var(--success);margin-right:8px;"></i> Top Suppliers</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-wrapper">
+                                <table class="phoenix-table">
+                                    <thead><tr><th>Supplier</th><th>Lead Time</th><th>Open POs</th><th>YTD Spend</th></tr></thead>
+                                    <tbody>
+                                        <tr><td><strong>Allied Components</strong></td><td>5 days</td><td>2</td><td>$42,800</td></tr>
+                                        <tr><td><strong>FastParts Inc</strong></td><td>3 days</td><td>1</td><td>$28,350</td></tr>
+                                        <tr><td><strong>National Bearings</strong></td><td>7 days</td><td>1</td><td>$18,900</td></tr>
+                                        <tr><td><strong>Hydraulic Supply Co</strong></td><td>10 days</td><td>0</td><td>$12,440</td></tr>
+                                        <tr><td><strong>Label Direct</strong></td><td>2 days</td><td>0</td><td>$8,100</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div id="page-modules" class="content-area page-content" style="display:none;">
                 <div style="margin-bottom:24px;">
                     <p style="color:var(--text-secondary);font-size:15px;">Extend PhoenixPHP with plug-and-play modules. Each module includes database schema, REST API endpoints, dashboard views, and full documentation. Base framework: <strong style="color:var(--accent);">$40</strong> | Each module: <strong style="color:var(--accent);">$20</strong></p>
