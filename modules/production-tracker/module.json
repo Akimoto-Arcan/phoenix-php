@@ -1,0 +1,25 @@
+{
+    "id": "production-tracker",
+    "name": "Production Tracker",
+    "version": "1.0.0",
+    "description": "Track production output, quality metrics, operator assignments, and shift data across multiple lines or machines. Real-time dashboards with configurable KPIs.",
+    "author": "CDAC Programming",
+    "price": "$20",
+    "category": "Manufacturing",
+    "icon": "fas fa-industry",
+    "color": "#8b5cf6",
+    "requires": "phoenix-php >= 1.0.0",
+    "dependencies": [],
+    "api_prefix": "/api/v1/production",
+    "endpoints": 18,
+    "features": [
+        "Multi-line/machine production tracking",
+        "Operator shift assignments and handoffs",
+        "Real-time output counters and efficiency metrics",
+        "Quality rate tracking with defect categorization",
+        "Configurable production targets and KPIs",
+        "Shift reports with automatic calculations",
+        "Downtime logging with reason codes",
+        "Historical production data with trend analysis"
+    ]
+}

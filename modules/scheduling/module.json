@@ -1,0 +1,25 @@
+{
+    "id": "scheduling",
+    "name": "Shift Scheduling",
+    "version": "1.0.0",
+    "description": "Employee shift scheduling with drag-and-drop calendar, availability tracking, shift swaps, overtime calculations, and schedule publishing.",
+    "author": "CDAC Programming",
+    "price": "$20",
+    "category": "HR",
+    "icon": "fas fa-calendar-alt",
+    "color": "#ec4899",
+    "requires": "phoenix-php >= 1.0.0",
+    "dependencies": [],
+    "api_prefix": "/api/v1/scheduling",
+    "endpoints": 14,
+    "features": [
+        "Visual shift calendar with drag-and-drop",
+        "Employee availability management",
+        "Shift swap requests and approvals",
+        "Overtime tracking and alerts",
+        "Schedule templates for recurring patterns",
+        "Department/team-based scheduling",
+        "Schedule publishing and notifications",
+        "Time-off request integration"
+    ]
+}

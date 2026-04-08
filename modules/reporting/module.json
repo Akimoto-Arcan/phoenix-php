@@ -1,0 +1,25 @@
+{
+    "id": "reporting",
+    "name": "Report Builder",
+    "version": "1.0.0",
+    "description": "Dynamic report builder with custom queries, scheduled reports, PDF/Excel export, and interactive Chart.js dashboards. Build reports from any module's data.",
+    "author": "CDAC Programming",
+    "price": "$20",
+    "category": "Analytics",
+    "icon": "fas fa-chart-pie",
+    "color": "#f59e0b",
+    "requires": "phoenix-php >= 1.0.0",
+    "dependencies": [],
+    "api_prefix": "/api/v1/reports",
+    "endpoints": 12,
+    "features": [
+        "Visual report builder with drag-and-drop fields",
+        "Custom SQL query editor for power users",
+        "Scheduled report generation and email delivery",
+        "PDF and Excel export (PHPSpreadsheet + mPDF)",
+        "Interactive Chart.js dashboards",
+        "Saved report templates",
+        "Cross-module data access",
+        "Role-based report visibility"
+    ]
+}

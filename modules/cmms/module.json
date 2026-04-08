@@ -1,0 +1,43 @@
+{
+    "id": "cmms",
+    "name": "CMMS — Maintenance Management",
+    "version": "1.0.0",
+    "description": "Computerized Maintenance Management System. Track work orders, preventive maintenance schedules, equipment assets, parts inventory, and maintenance team assignments. Full audit trail and reporting.",
+    "author": "CDAC Programming",
+    "price": "$20",
+    "category": "Operations",
+    "icon": "fas fa-wrench",
+    "color": "#3b82f6",
+    "requires": "phoenix-php >= 1.0.0",
+    "dependencies": [],
+    "nav": [
+        {
+            "label": "Maintenance",
+            "icon": "fas fa-wrench",
+            "url": "/modules/cmms/views/dashboard.php",
+            "permission": "maintenance.read",
+            "children": [
+                { "label": "Dashboard", "url": "/modules/cmms/views/dashboard.php", "icon": "fas fa-tachometer-alt" },
+                { "label": "Work Orders", "url": "/modules/cmms/views/work-orders.php", "icon": "fas fa-clipboard-list" },
+                { "label": "PM Schedule", "url": "/modules/cmms/views/pm-schedule.php", "icon": "fas fa-calendar-check" },
+                { "label": "Equipment", "url": "/modules/cmms/views/equipment.php", "icon": "fas fa-cogs" },
+                { "label": "Parts", "url": "/modules/cmms/views/parts.php", "icon": "fas fa-puzzle-piece" },
+                { "label": "Reports", "url": "/modules/cmms/views/reports.php", "icon": "fas fa-chart-bar" }
+            ]
+        }
+    ],
+    "api_prefix": "/api/v1/maintenance",
+    "endpoints": 20,
+    "features": [
+        "Work order creation, assignment, and tracking",
+        "Preventive maintenance scheduling with recurring tasks",
+        "Equipment/asset registry with maintenance history",
+        "Parts inventory linked to equipment and work orders",
+        "Technician assignment and time tracking",
+        "Priority levels (Emergency, High, Medium, Low)",
+        "Status workflow (Open, In Progress, On Hold, Completed)",
+        "Downtime tracking and reporting",
+        "Maintenance cost tracking",
+        "Full audit trail on all work orders"
+    ]
+}

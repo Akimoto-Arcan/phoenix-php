@@ -1,0 +1,25 @@
+{
+    "id": "chat-system",
+    "name": "Internal Chat & Messaging",
+    "version": "1.0.0",
+    "description": "Real-time internal messaging system with channels, direct messages, file attachments, and notification integration. Built for teams that need fast, secure communication.",
+    "author": "CDAC Programming",
+    "price": "$20",
+    "category": "Communication",
+    "icon": "fas fa-comments",
+    "color": "#06b6d4",
+    "requires": "phoenix-php >= 1.0.0",
+    "dependencies": [],
+    "api_prefix": "/api/v1/chat",
+    "endpoints": 16,
+    "features": [
+        "Channel-based group messaging",
+        "Direct messages between users",
+        "Unread count badges and notifications",
+        "File and image attachments",
+        "Message search and history",
+        "User presence (online/offline/away)",
+        "Polling-based real-time updates",
+        "Admin channel management"
+    ]
+}

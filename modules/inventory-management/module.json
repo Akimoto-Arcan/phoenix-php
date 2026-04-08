@@ -1,0 +1,43 @@
+{
+    "id": "inventory-management",
+    "name": "Inventory Management",
+    "version": "1.0.0",
+    "description": "Complete inventory tracking with receiving, fulfillment, stock levels, barcode scanning, and supplier management. Includes real-time dashboard, low-stock alerts, and full REST API.",
+    "author": "CDAC Programming",
+    "price": "$20",
+    "category": "Operations",
+    "icon": "fas fa-boxes",
+    "color": "#10b981",
+    "requires": "phoenix-php >= 1.0.0",
+    "dependencies": [],
+    "nav": [
+        {
+            "label": "Inventory",
+            "icon": "fas fa-boxes",
+            "url": "/modules/inventory-management/views/dashboard.php",
+            "permission": "inventory.read",
+            "children": [
+                { "label": "Dashboard", "url": "/modules/inventory-management/views/dashboard.php", "icon": "fas fa-tachometer-alt" },
+                { "label": "Items", "url": "/modules/inventory-management/views/items.php", "icon": "fas fa-list" },
+                { "label": "Receiving", "url": "/modules/inventory-management/views/receiving.php", "icon": "fas fa-truck-loading" },
+                { "label": "Fulfillment", "url": "/modules/inventory-management/views/fulfillment.php", "icon": "fas fa-shipping-fast" },
+                { "label": "Suppliers", "url": "/modules/inventory-management/views/suppliers.php", "icon": "fas fa-handshake" },
+                { "label": "Reports", "url": "/modules/inventory-management/views/reports.php", "icon": "fas fa-chart-bar" }
+            ]
+        }
+    ],
+    "api_prefix": "/api/v1/inventory",
+    "endpoints": 24,
+    "features": [
+        "Item master with categories, SKUs, and UPC codes",
+        "Real-time stock levels across multiple locations",
+        "Receiving workflow with PO matching",
+        "Fulfillment and pick/pack/ship workflow",
+        "Barcode scanner integration",
+        "Supplier management with lead times",
+        "Low-stock alerts and reorder points",
+        "Inventory valuation (FIFO, weighted average)",
+        "Stock adjustment with audit trail",
+        "Full REST API with 24 endpoints"
+    ]
+}
