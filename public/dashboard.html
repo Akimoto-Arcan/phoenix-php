@@ -50,6 +50,14 @@
                 </div>
 
                 <div class="nav-section">
+                    <div class="nav-section-title">Marketplace</div>
+                    <a href="#" class="nav-item" onclick="showPage('modules', this)">
+                        <i class="fas fa-puzzle-piece"></i> Modules
+                        <span class="nav-badge">6</span>
+                    </a>
+                </div>
+
+                <div class="nav-section">
                     <div class="nav-section-title">System</div>
                     <a href="#" class="nav-item" onclick="showPage('cache', this)">
                         <i class="fas fa-database"></i> Cache Manager
@@ -502,6 +510,149 @@ $users = <span class="func">QueryCache</span>::<span class="func">query</span>($
                 <div class="card"><div class="card-header"><h3><i class="fas fa-chart-line" style="color:var(--accent);margin-right:8px;"></i> Performance Trends</h3></div><div class="card-body"><div class="chart-container"><canvas id="perfChart"></canvas></div></div></div>
             </div>
 
+            <!-- ===== MODULES MARKETPLACE PAGE ===== -->
+            <div id="page-modules" class="content-area page-content" style="display:none;">
+                <div style="margin-bottom:24px;">
+                    <p style="color:var(--text-secondary);font-size:15px;">Extend PhoenixPHP with plug-and-play modules. Each module includes database schema, REST API endpoints, dashboard views, and full documentation. Base framework: <strong style="color:var(--accent);">$40</strong> | Each module: <strong style="color:var(--accent);">$20</strong></p>
+                </div>
+
+                <div class="module-grid">
+                    <!-- Inventory Management -->
+                    <div class="module-card">
+                        <div class="module-card-header">
+                            <div class="module-icon" style="background:rgba(16,185,129,0.15);color:#10b981;"><i class="fas fa-boxes"></i></div>
+                            <div><h3>Inventory Management</h3><span class="module-version">v1.0.0 &bull; 24 API endpoints</span></div>
+                        </div>
+                        <p class="module-description">Complete inventory tracking with receiving, fulfillment, stock levels, barcode scanning, and supplier management.</p>
+                        <ul class="module-features">
+                            <li>Real-time stock levels across multiple locations</li>
+                            <li>Receiving workflow with PO matching</li>
+                            <li>Pick/pack/ship fulfillment</li>
+                            <li>Low-stock alerts and reorder points</li>
+                            <li>Barcode scanner integration</li>
+                            <li>Supplier management with lead times</li>
+                        </ul>
+                        <div class="module-footer">
+                            <span class="module-price">$20</span>
+                            <button class="btn btn-sm btn-primary"><i class="fas fa-download"></i> Install</button>
+                        </div>
+                    </div>
+
+                    <!-- CMMS -->
+                    <div class="module-card">
+                        <div class="module-card-header">
+                            <div class="module-icon" style="background:rgba(59,130,246,0.15);color:#3b82f6;"><i class="fas fa-wrench"></i></div>
+                            <div><h3>CMMS — Maintenance</h3><span class="module-version">v1.0.0 &bull; 20 API endpoints</span></div>
+                        </div>
+                        <p class="module-description">Computerized Maintenance Management System. Work orders, preventive maintenance, equipment tracking, and parts inventory.</p>
+                        <ul class="module-features">
+                            <li>Work order creation and assignment</li>
+                            <li>Preventive maintenance scheduling</li>
+                            <li>Equipment asset registry</li>
+                            <li>Parts inventory linked to work orders</li>
+                            <li>Downtime and cost tracking</li>
+                            <li>Priority levels and status workflow</li>
+                        </ul>
+                        <div class="module-footer">
+                            <span class="module-price">$20</span>
+                            <button class="btn btn-sm btn-primary"><i class="fas fa-download"></i> Install</button>
+                        </div>
+                    </div>
+
+                    <!-- Production Tracker -->
+                    <div class="module-card">
+                        <div class="module-card-header">
+                            <div class="module-icon" style="background:rgba(139,92,246,0.15);color:#8b5cf6;"><i class="fas fa-industry"></i></div>
+                            <div><h3>Production Tracker</h3><span class="module-version">v1.0.0 &bull; 18 API endpoints</span></div>
+                        </div>
+                        <p class="module-description">Track production output, quality metrics, operator assignments, and shift data across multiple lines or machines.</p>
+                        <ul class="module-features">
+                            <li>Multi-line/machine production tracking</li>
+                            <li>Operator shift assignments and handoffs</li>
+                            <li>Real-time output and efficiency metrics</li>
+                            <li>Quality rate tracking with defect categories</li>
+                            <li>Downtime logging with reason codes</li>
+                            <li>Configurable KPI dashboards</li>
+                        </ul>
+                        <div class="module-footer">
+                            <span class="module-price">$20</span>
+                            <button class="btn btn-sm btn-primary"><i class="fas fa-download"></i> Install</button>
+                        </div>
+                    </div>
+
+                    <!-- Chat System -->
+                    <div class="module-card">
+                        <div class="module-card-header">
+                            <div class="module-icon" style="background:rgba(6,182,212,0.15);color:#06b6d4;"><i class="fas fa-comments"></i></div>
+                            <div><h3>Internal Chat</h3><span class="module-version">v1.0.0 &bull; 16 API endpoints</span></div>
+                        </div>
+                        <p class="module-description">Real-time internal messaging with channels, direct messages, file attachments, and notification integration.</p>
+                        <ul class="module-features">
+                            <li>Channel-based group messaging</li>
+                            <li>Direct messages between users</li>
+                            <li>Unread count badges and notifications</li>
+                            <li>File and image attachments</li>
+                            <li>Message search and history</li>
+                            <li>User presence indicators</li>
+                        </ul>
+                        <div class="module-footer">
+                            <span class="module-price">$20</span>
+                            <button class="btn btn-sm btn-primary"><i class="fas fa-download"></i> Install</button>
+                        </div>
+                    </div>
+
+                    <!-- Scheduling -->
+                    <div class="module-card">
+                        <div class="module-card-header">
+                            <div class="module-icon" style="background:rgba(236,72,153,0.15);color:#ec4899;"><i class="fas fa-calendar-alt"></i></div>
+                            <div><h3>Shift Scheduling</h3><span class="module-version">v1.0.0 &bull; 14 API endpoints</span></div>
+                        </div>
+                        <p class="module-description">Employee shift scheduling with calendar view, availability tracking, shift swaps, and overtime calculations.</p>
+                        <ul class="module-features">
+                            <li>Visual shift calendar</li>
+                            <li>Employee availability management</li>
+                            <li>Shift swap requests and approvals</li>
+                            <li>Overtime tracking and alerts</li>
+                            <li>Schedule templates</li>
+                            <li>Time-off request integration</li>
+                        </ul>
+                        <div class="module-footer">
+                            <span class="module-price">$20</span>
+                            <button class="btn btn-sm btn-primary"><i class="fas fa-download"></i> Install</button>
+                        </div>
+                    </div>
+
+                    <!-- Report Builder -->
+                    <div class="module-card">
+                        <div class="module-card-header">
+                            <div class="module-icon" style="background:rgba(245,158,11,0.15);color:#f59e0b;"><i class="fas fa-chart-pie"></i></div>
+                            <div><h3>Report Builder</h3><span class="module-version">v1.0.0 &bull; 12 API endpoints</span></div>
+                        </div>
+                        <p class="module-description">Dynamic report builder with custom queries, scheduled reports, PDF/Excel export, and interactive Chart.js dashboards.</p>
+                        <ul class="module-features">
+                            <li>Visual report builder</li>
+                            <li>Custom SQL query editor</li>
+                            <li>Scheduled report generation</li>
+                            <li>PDF and Excel export</li>
+                            <li>Interactive Chart.js dashboards</li>
+                            <li>Cross-module data access</li>
+                        </ul>
+                        <div class="module-footer">
+                            <span class="module-price">$20</span>
+                            <button class="btn btn-sm btn-primary"><i class="fas fa-download"></i> Install</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body" style="text-align:center;padding:32px;">
+                        <h3 style="margin-bottom:8px;">Bundle &amp; Save</h3>
+                        <p style="color:var(--text-secondary);margin-bottom:16px;">Get the base framework + all 6 modules for <span style="text-decoration:line-through;color:var(--text-muted);">$160</span> <strong style="color:var(--accent);font-size:24px;">$99</strong></p>
+                        <button class="btn btn-primary" style="width:auto;padding:14px 48px;"><i class="fas fa-shopping-cart"></i> Get Complete Bundle</button>
+                    </div>
+                </div>
+            </div>
+
             <div id="page-settings" class="content-area page-content" style="display:none;">
                 <div class="card">
                     <div class="card-header"><h3><i class="fas fa-cog" style="color:var(--accent);margin-right:8px;"></i> Application Settings</h3><button class="btn btn-sm btn-primary"><i class="fas fa-save"></i> Save</button></div>
@@ -518,7 +669,23 @@ $users = <span class="func">QueryCache</span>::<span class="func">query</span>($
         </main>
     </div>
 
+    <!-- Mobile menu toggle + overlay -->
+    <button class="mobile-menu-toggle" onclick="toggleMobileMenu()"><i class="fas fa-bars"></i></button>
+    <div class="mobile-overlay" id="mobileOverlay" onclick="toggleMobileMenu()"></div>
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <script src="js/phoenix.js"></script>
+    <script>
+        function toggleMobileMenu() {
+            document.querySelector('.sidebar').classList.toggle('open');
+            document.getElementById('mobileOverlay').classList.toggle('active');
+        }
+        // Close sidebar on nav click (mobile)
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', () => {
+                if (window.innerWidth <= 1024) toggleMobileMenu();
+            });
+        });
+    </script>
 </body>
 </html>

@@ -16,6 +16,7 @@ function showPage(pageId, el) {
         users: 'Users & RBAC',
         api: 'API Explorer',
         activity: 'Activity Log',
+        modules: 'Module Marketplace',
         cache: 'Cache Manager',
         security: 'Security',
         settings: 'Settings'
