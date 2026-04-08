@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhoenixPHP — Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/phoenix.css">
+</head>
+<body>
+    <div class="app-wrapper">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="#" class="brand">
+                    <span class="brand-icon">&#x1F426;&#x200D;&#x1F525;</span>
+                    <div>
+                        <span class="brand-text">Phoenix<span>PHP</span></span>
+                        <span class="brand-sub">CDAC Programming</span>
+                    </div>
+                </a>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Main</div>
+                    <a href="#" class="nav-item active" onclick="showPage('dashboard', this)">
+                        <i class="fas fa-fire"></i> Dashboard
+                    </a>
+                    <a href="#" class="nav-item" onclick="showPage('analytics', this)">
+                        <i class="fas fa-chart-line"></i> Analytics
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Management</div>
+                    <a href="#" class="nav-item" onclick="showPage('users', this)">
+                        <i class="fas fa-users"></i> Users & RBAC
+                        <span class="nav-badge">7</span>
+                    </a>
+                    <a href="#" class="nav-item" onclick="showPage('api', this)">
+                        <i class="fas fa-code"></i> API Explorer
+                        <span class="nav-badge">86+</span>
+                    </a>
+                    <a href="#" class="nav-item" onclick="showPage('activity', this)">
+                        <i class="fas fa-history"></i> Activity Log
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">System</div>
+                    <a href="#" class="nav-item" onclick="showPage('cache', this)">
+                        <i class="fas fa-database"></i> Cache Manager
+                    </a>
+                    <a href="#" class="nav-item" onclick="showPage('security', this)">
+                        <i class="fas fa-shield-alt"></i> Security
+                    </a>
+                    <a href="#" class="nav-item" onclick="showPage('settings', this)">
+                        <i class="fas fa-cog"></i> Settings
+                    </a>
+                </div>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="sidebar-user">
+                    <div class="user-avatar">CC</div>
+                    <div class="user-info">
+                        <div class="name">Chris Carpenter</div>
+                        <div class="role">SuperAdmin</div>
+                    </div>
+                    <a href="login.html" style="color:var(--text-muted);"><i class="fas fa-sign-out-alt"></i></a>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="topbar">
+                <h2 id="pageTitle">Dashboard</h2>
+                <div class="topbar-actions">
+                    <span style="color:var(--success); font-size:13px;"><i class="fas fa-circle" style="font-size:8px;"></i> System Online</span>
+                    <button class="btn btn-sm btn-outline"><i class="fas fa-bell"></i></button>
+                    <button class="btn btn-sm btn-outline"><i class="fas fa-moon"></i></button>
+                </div>
+            </div>
+
+            <!-- ===== DASHBOARD PAGE ===== -->
+            <div id="page-dashboard" class="content-area page-content">
+                <!-- Stats -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon amber"><i class="fas fa-users"></i></div>
+                        <div class="stat-value" id="stat-users">128</div>
+                        <div class="stat-label">Active Users</div>
+                        <div class="stat-change up"><i class="fas fa-arrow-up"></i> 12% this week</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon blue"><i class="fas fa-exchange-alt"></i></div>
+                        <div class="stat-value" id="stat-api">24.8K</div>
+                        <div class="stat-label">API Requests (24h)</div>
+                        <div class="stat-change up"><i class="fas fa-arrow-up"></i> 8% vs yesterday</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon green"><i class="fas fa-tachometer-alt"></i></div>
+                        <div class="stat-value">99.9%</div>
+                        <div class="stat-label">Uptime</div>
+                        <div class="stat-change up"><i class="fas fa-check"></i> All systems go</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon red"><i class="fas fa-bolt"></i></div>
+                        <div class="stat-value">48ms</div>
+                        <div class="stat-label">Avg Response Time</div>
+                        <div class="stat-change up"><i class="fas fa-arrow-down"></i> 15% faster</div>
+                    </div>
+                </div>
+
+                <div class="grid-3">
+                    <!-- Chart -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-chart-area" style="color:var(--accent);margin-right:8px;"></i> API Traffic (7 Days)</h3>
+                            <div>
+                                <button class="btn btn-sm btn-outline" onclick="updateChart('week')">Week</button>
+                                <button class="btn btn-sm btn-outline" onclick="updateChart('month')">Month</button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-container">
+                                <canvas id="trafficChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Activity Feed -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-stream" style="color:var(--info);margin-right:8px;"></i> Live Activity</h3>
+                        </div>
+                        <div class="card-body">
+                            <ul class="activity-feed" id="activityFeed">
+                                <li class="activity-item">
+                                    <span class="activity-dot green"></span>
+                                    <div>
+                                        <div class="activity-text"><strong>admin@demo.com</strong> logged in successfully</div>
+                                        <div class="activity-time">Just now</div>
+                                    </div>
+                                </li>
+                                <li class="activity-item">
+                                    <span class="activity-dot blue"></span>
+                                    <div>
+                                        <div class="activity-text">API endpoint <strong>/v1/users</strong> called — 200 OK</div>
+                                        <div class="activity-time">2 minutes ago</div>
+                                    </div>
+                                </li>
+                                <li class="activity-item">
+                                    <span class="activity-dot amber"></span>
+                                    <div>
+                                        <div class="activity-text">Cache cleared for <strong>dashboard_stats</strong></div>
+                                        <div class="activity-time">5 minutes ago</div>
+                                    </div>
+                                </li>
+                                <li class="activity-item">
+                                    <span class="activity-dot red"></span>
+                                    <div>
+                                        <div class="activity-text">Rate limit triggered for IP <strong>203.0.113.42</strong></div>
+                                        <div class="activity-time">12 minutes ago</div>
+                                    </div>
+                                </li>
+                                <li class="activity-item">
+                                    <span class="activity-dot green"></span>
+                                    <div>
+                                        <div class="activity-text">User <strong>jsmith</strong> permissions updated to <strong>Supervisor</strong></div>
+                                        <div class="activity-time">18 minutes ago</div>
+                                    </div>
+                                </li>
+                                <li class="activity-item">
+                                    <span class="activity-dot blue"></span>
+                                    <div>
+                                        <div class="activity-text">Database backup completed — <strong>0 errors</strong></div>
+                                        <div class="activity-time">1 hour ago</div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- System Status + DB Connections -->
+                <div class="grid-2">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-heartbeat" style="color:var(--success);margin-right:8px;"></i> System Status</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="status-row">
+                                <span class="status-label"><span class="status-indicator online"></span> Apache Web Server</span>
+                                <span class="status-value">Running — 14d 6h uptime</span>
+                            </div>
+                            <div class="status-row">
+                                <span class="status-label"><span class="status-indicator online"></span> MySQL Primary</span>
+                                <span class="status-value">Connected — 4ms latency</span>
+                            </div>
+                            <div class="status-row">
+                                <span class="status-label"><span class="status-indicator online"></span> MySQL Replica</span>
+                                <span class="status-value">Synced — 0 lag</span>
+                            </div>
+                            <div class="status-row">
+                                <span class="status-label"><span class="status-indicator online"></span> Redis Cache</span>
+                                <span class="status-value">94% hit rate — 2.4GB used</span>
+                            </div>
+                            <div class="status-row">
+                                <span class="status-label"><span class="status-indicator online"></span> CSRF Protection</span>
+                                <span class="status-value">Active — tokens rotating</span>
+                            </div>
+                            <div class="status-row">
+                                <span class="status-label"><span class="status-indicator warning"></span> Rate Limiter</span>
+                                <span class="status-value">3 IPs throttled (last hour)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-server" style="color:var(--accent);margin-right:8px;"></i> Database Connections</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-wrapper">
+                                <table class="phoenix-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Connection</th>
+                                            <th>Status</th>
+                                            <th>Queries</th>
+                                            <th>Latency</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>primary</strong></td>
+                                            <td><span class="badge badge-success">Online</span></td>
+                                            <td>1,247</td>
+                                            <td>4ms</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>users</strong></td>
+                                            <td><span class="badge badge-success">Online</span></td>
+                                            <td>892</td>
+                                            <td>3ms</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>analytics</strong></td>
+                                            <td><span class="badge badge-success">Online</span></td>
+                                            <td>3,441</td>
+                                            <td>7ms</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>module_1</strong></td>
+                                            <td><span class="badge badge-success">Online</span></td>
+                                            <td>567</td>
+                                            <td>5ms</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== USERS PAGE ===== -->
+            <div id="page-users" class="content-area page-content" style="display:none;">
+                <div class="card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-users" style="color:var(--accent);margin-right:8px;"></i> Users & Permission Groups (RBAC)</h3>
+                        <button class="btn btn-sm btn-primary"><i class="fas fa-plus"></i> Add User</button>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-wrapper">
+                            <table class="phoenix-table">
+                                <thead>
+                                    <tr><th>User</th><th>Email</th><th>Role</th><th>Status</th><th>Last Login</th><th>Actions</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td><strong>Chris Carpenter</strong></td><td>admin@phoenix.dev</td><td><span class="badge badge-warning">SuperAdmin</span></td><td><span class="badge badge-success">Active</span></td><td>Just now</td><td><button class="btn btn-sm btn-outline">Edit</button></td></tr>
+                                    <tr><td><strong>Jane Smith</strong></td><td>jane@phoenix.dev</td><td><span class="badge badge-info">Admin</span></td><td><span class="badge badge-success">Active</span></td><td>10 min ago</td><td><button class="btn btn-sm btn-outline">Edit</button></td></tr>
+                                    <tr><td><strong>Mike Johnson</strong></td><td>mike@phoenix.dev</td><td><span class="badge badge-info">Supervisor</span></td><td><span class="badge badge-success">Active</span></td><td>1 hour ago</td><td><button class="btn btn-sm btn-outline">Edit</button></td></tr>
+                                    <tr><td><strong>Sarah Davis</strong></td><td>sarah@phoenix.dev</td><td><span class="badge badge-success">Operator</span></td><td><span class="badge badge-success">Active</span></td><td>3 hours ago</td><td><button class="btn btn-sm btn-outline">Edit</button></td></tr>
+                                    <tr><td><strong>Tom Wilson</strong></td><td>tom@phoenix.dev</td><td><span class="badge badge-success">Inspector</span></td><td><span class="badge badge-danger">Locked</span></td><td>2 days ago</td><td><button class="btn btn-sm btn-outline">Edit</button></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header"><h3><i class="fas fa-key" style="color:var(--info);margin-right:8px;"></i> Permission Groups</h3></div>
+                    <div class="card-body">
+                        <div class="table-wrapper">
+                            <table class="phoenix-table">
+                                <thead><tr><th>Group</th><th>Read</th><th>Write</th><th>Delete</th><th>Admin</th><th>Members</th></tr></thead>
+                                <tbody>
+                                    <tr><td><strong>SuperAdmin</strong></td><td><i class="fas fa-check" style="color:var(--success)"></i></td><td><i class="fas fa-check" style="color:var(--success)"></i></td><td><i class="fas fa-check" style="color:var(--success)"></i></td><td><i class="fas fa-check" style="color:var(--success)"></i></td><td>2</td></tr>
+                                    <tr><td><strong>Admin</strong></td><td><i class="fas fa-check" style="color:var(--success)"></i></td><td><i class="fas fa-check" style="color:var(--success)"></i></td><td><i class="fas fa-check" style="color:var(--success)"></i></td><td><i class="fas fa-times" style="color:var(--danger)"></i></td><td>3</td></tr>
+                                    <tr><td><strong>Supervisor</strong></td><td><i class="fas fa-check" style="color:var(--success)"></i></td><td><i class="fas fa-check" style="color:var(--success)"></i></td><td><i class="fas fa-times" style="color:var(--danger)"></i></td><td><i class="fas fa-times" style="color:var(--danger)"></i></td><td>8</td></tr>
+                                    <tr><td><strong>Operator</strong></td><td><i class="fas fa-check" style="color:var(--success)"></i></td><td><i class="fas fa-check" style="color:var(--success)"></i></td><td><i class="fas fa-times" style="color:var(--danger)"></i></td><td><i class="fas fa-times" style="color:var(--danger)"></i></td><td>45</td></tr>
+                                    <tr><td><strong>Inspector</strong></td><td><i class="fas fa-check" style="color:var(--success)"></i></td><td><i class="fas fa-check" style="color:var(--success)"></i></td><td><i class="fas fa-times" style="color:var(--danger)"></i></td><td><i class="fas fa-times" style="color:var(--danger)"></i></td><td>12</td></tr>
+                                    <tr><td><strong>Viewer</strong></td><td><i class="fas fa-check" style="color:var(--success)"></i></td><td><i class="fas fa-times" style="color:var(--danger)"></i></td><td><i class="fas fa-times" style="color:var(--danger)"></i></td><td><i class="fas fa-times" style="color:var(--danger)"></i></td><td>58</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== API EXPLORER PAGE ===== -->
+            <div id="page-api" class="content-area page-content" style="display:none;">
+                <div class="card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-code" style="color:var(--accent);margin-right:8px;"></i> REST API Explorer — 86+ Endpoints</h3>
+                        <button class="btn btn-sm btn-info"><i class="fas fa-external-link-alt"></i> Swagger UI</button>
+                    </div>
+                    <div class="card-body">
+                        <div class="code-block">
+<span class="comment">// PhoenixPHP API — Standardized Response Format</span>
+<span class="keyword">GET</span> /api/v1/users
+
+<span class="comment">// Success Response</span>
+{
+    <span class="string">"ok"</span>: <span class="keyword">true</span>,
+    <span class="string">"data"</span>: {
+        <span class="string">"users"</span>: [...],
+        <span class="string">"pagination"</span>: {
+            <span class="string">"page"</span>: <span class="var">1</span>,
+            <span class="string">"per_page"</span>: <span class="var">20</span>,
+            <span class="string">"total"</span>: <span class="var">128</span>
+        }
+    }
+}
+
+<span class="comment">// Error Response</span>
+{
+    <span class="string">"ok"</span>: <span class="keyword">false</span>,
+    <span class="string">"error"</span>: <span class="string">"Unauthorized"</span>,
+    <span class="string">"code"</span>: <span class="var">401</span>
+}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header"><h3>Available Endpoints</h3></div>
+                    <div class="card-body">
+                        <div class="table-wrapper">
+                            <table class="phoenix-table">
+                                <thead><tr><th>Method</th><th>Endpoint</th><th>Auth</th><th>Description</th></tr></thead>
+                                <tbody>
+                                    <tr><td><span class="badge badge-success">GET</span></td><td><code>/api/v1/users</code></td><td><i class="fas fa-lock" style="color:var(--accent)"></i></td><td>List all users (paginated)</td></tr>
+                                    <tr><td><span class="badge badge-info">POST</span></td><td><code>/api/v1/users</code></td><td><i class="fas fa-lock" style="color:var(--accent)"></i></td><td>Create new user</td></tr>
+                                    <tr><td><span class="badge badge-success">GET</span></td><td><code>/api/v1/users/{id}</code></td><td><i class="fas fa-lock" style="color:var(--accent)"></i></td><td>Get user by ID</td></tr>
+                                    <tr><td><span class="badge badge-warning">PUT</span></td><td><code>/api/v1/users/{id}</code></td><td><i class="fas fa-lock" style="color:var(--accent)"></i></td><td>Update user</td></tr>
+                                    <tr><td><span class="badge badge-danger">DELETE</span></td><td><code>/api/v1/users/{id}</code></td><td><i class="fas fa-lock" style="color:var(--accent)"></i></td><td>Delete user</td></tr>
+                                    <tr><td><span class="badge badge-success">GET</span></td><td><code>/api/v1/modules</code></td><td><i class="fas fa-lock" style="color:var(--accent)"></i></td><td>List all modules</td></tr>
+                                    <tr><td><span class="badge badge-success">GET</span></td><td><code>/api/v1/modules/{type}/{id}</code></td><td><i class="fas fa-lock" style="color:var(--accent)"></i></td><td>Get module data</td></tr>
+                                    <tr><td><span class="badge badge-success">GET</span></td><td><code>/api/v1/cache/stats</code></td><td><i class="fas fa-lock" style="color:var(--accent)"></i></td><td>Cache hit/miss statistics</td></tr>
+                                    <tr><td><span class="badge badge-info">POST</span></td><td><code>/api/v1/auth/login</code></td><td><i class="fas fa-unlock" style="color:var(--text-muted)"></i></td><td>Authenticate user</td></tr>
+                                    <tr><td><span class="badge badge-info">POST</span></td><td><code>/api/v1/auth/logout</code></td><td><i class="fas fa-lock" style="color:var(--accent)"></i></td><td>End session</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== ACTIVITY LOG PAGE ===== -->
+            <div id="page-activity" class="content-area page-content" style="display:none;">
+                <div class="card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-history" style="color:var(--accent);margin-right:8px;"></i> Audit Trail — Field-Level Change Tracking</h3>
+                        <button class="btn btn-sm btn-outline"><i class="fas fa-download"></i> Export</button>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-wrapper">
+                            <table class="phoenix-table">
+                                <thead><tr><th>Timestamp</th><th>User</th><th>Action</th><th>Field</th><th>Old Value</th><th>New Value</th><th>IP</th></tr></thead>
+                                <tbody>
+                                    <tr><td>2026-04-08 14:22:01</td><td>admin</td><td><span class="badge badge-info">UPDATE</span></td><td>user.role</td><td>Operator</td><td>Supervisor</td><td>192.168.1.10</td></tr>
+                                    <tr><td>2026-04-08 14:18:33</td><td>jsmith</td><td><span class="badge badge-success">CREATE</span></td><td>record.new</td><td>—</td><td>Order #4521</td><td>192.168.1.25</td></tr>
+                                    <tr><td>2026-04-08 14:15:07</td><td>admin</td><td><span class="badge badge-warning">CONFIG</span></td><td>cache.ttl</td><td>300</td><td>600</td><td>192.168.1.10</td></tr>
+                                    <tr><td>2026-04-08 14:10:44</td><td>sdavis</td><td><span class="badge badge-info">UPDATE</span></td><td>order.status</td><td>Pending</td><td>Shipped</td><td>192.168.1.31</td></tr>
+                                    <tr><td>2026-04-08 14:05:12</td><td>system</td><td><span class="badge badge-success">BACKUP</span></td><td>database</td><td>—</td><td>Completed (0 errors)</td><td>127.0.0.1</td></tr>
+                                    <tr><td>2026-04-08 13:58:29</td><td>twilson</td><td><span class="badge badge-danger">BLOCKED</span></td><td>auth.login</td><td>—</td><td>Rate limit exceeded</td><td>203.0.113.42</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== SECURITY PAGE ===== -->
+            <div id="page-security" class="content-area page-content" style="display:none;">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon green"><i class="fas fa-shield-alt"></i></div>
+                        <div class="stat-value">A+</div>
+                        <div class="stat-label">Security Score</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon amber"><i class="fas fa-key"></i></div>
+                        <div class="stat-value">847</div>
+                        <div class="stat-label">CSRF Tokens Generated (24h)</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon red"><i class="fas fa-ban"></i></div>
+                        <div class="stat-value">23</div>
+                        <div class="stat-label">Blocked Requests (24h)</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon blue"><i class="fas fa-fingerprint"></i></div>
+                        <div class="stat-value">7</div>
+                        <div class="stat-label">RBAC Groups Active</div>
+                    </div>
+                </div>
+
+                <div class="grid-2">
+                    <div class="card">
+                        <div class="card-header"><h3><i class="fas fa-lock" style="color:var(--success);margin-right:8px;"></i> Security Features</h3></div>
+                        <div class="card-body">
+                            <div class="status-row"><span class="status-label"><span class="status-indicator online"></span> CSRF Protection</span><span class="status-value">Enabled — 1hr token rotation</span></div>
+                            <div class="status-row"><span class="status-label"><span class="status-indicator online"></span> SQL Injection Prevention</span><span class="status-value">Prepared statements enforced</span></div>
+                            <div class="status-row"><span class="status-label"><span class="status-indicator online"></span> Rate Limiting</span><span class="status-value">5 login / 100 API per hour</span></div>
+                            <div class="status-row"><span class="status-label"><span class="status-indicator online"></span> Input Sanitization</span><span class="status-value">All entry points covered</span></div>
+                            <div class="status-row"><span class="status-label"><span class="status-indicator online"></span> SSL/TLS</span><span class="status-value">Certificate valid — 287 days</span></div>
+                            <div class="status-row"><span class="status-label"><span class="status-indicator online"></span> Audit Logging</span><span class="status-value">Field-level tracking active</span></div>
+                            <div class="status-row"><span class="status-label"><span class="status-indicator online"></span> Session Security</span><span class="status-value">HTTPOnly, Secure, SameSite</span></div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header"><h3><i class="fas fa-code" style="color:var(--info);margin-right:8px;"></i> Quick Integration</h3></div>
+                        <div class="card-body">
+                            <div class="code-block">
+<span class="comment">// Authentication check</span>
+<span class="keyword">if</span> (<span class="func">Auth</span>::<span class="func">check</span>()) {
+    $user = <span class="func">Auth</span>::<span class="func">user</span>();
+}
+
+<span class="comment">// Permission gate</span>
+<span class="keyword">if</span> (<span class="func">Auth</span>::<span class="func">can</span>(<span class="string">'admin.write'</span>)) {
+    <span class="comment">// authorized action</span>
+}
+
+<span class="comment">// CSRF in forms</span>
+&lt;form method=<span class="string">"POST"</span>&gt;
+    &lt;?= <span class="func">CSRF</span>::<span class="func">field</span>() ?&gt;
+&lt;/form&gt;
+
+<span class="comment">// Input validation</span>
+$v = <span class="func">Validator</span>::<span class="func">make</span>($data, [
+    <span class="string">'email'</span> => <span class="string">'required|email'</span>,
+    <span class="string">'name'</span>  => <span class="string">'required|min:2'</span>,
+]);
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hidden pages (cache, analytics, settings) show same pattern -->
+            <div id="page-cache" class="content-area page-content" style="display:none;">
+                <div class="stats-grid">
+                    <div class="stat-card"><div class="stat-icon green"><i class="fas fa-bullseye"></i></div><div class="stat-value">94.2%</div><div class="stat-label">Cache Hit Rate</div></div>
+                    <div class="stat-card"><div class="stat-icon blue"><i class="fas fa-memory"></i></div><div class="stat-value">2.4 GB</div><div class="stat-label">Cache Size</div></div>
+                    <div class="stat-card"><div class="stat-icon amber"><i class="fas fa-layer-group"></i></div><div class="stat-value">Redis</div><div class="stat-label">Active Driver</div></div>
+                    <div class="stat-card"><div class="stat-icon red"><i class="fas fa-clock"></i></div><div class="stat-value">5 min</div><div class="stat-label">Default TTL</div></div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3><i class="fas fa-database" style="color:var(--accent);margin-right:8px;"></i> Cache Operations</h3><button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Flush All</button></div>
+                    <div class="card-body">
+                        <div class="code-block">
+<span class="comment">// Cache with automatic fallback (Redis → APCu → File)</span>
+$stats = <span class="func">Cache</span>::<span class="func">remember</span>(<span class="string">'dashboard_stats'</span>, <span class="var">300</span>, <span class="keyword">function</span>() {
+    <span class="keyword">return</span> <span class="func">db</span>()-><span class="func">query</span>(<span class="string">"SELECT COUNT(*) FROM users"</span>);
+});
+
+<span class="comment">// Query-level caching with tag invalidation</span>
+$users = <span class="func">QueryCache</span>::<span class="func">query</span>($pdo, <span class="string">"SELECT * FROM users WHERE active = 1"</span>, [], <span class="var">600</span>);
+<span class="func">QueryCache</span>::<span class="func">invalidate</span>(<span class="string">'users'</span>); <span class="comment">// Clear by tag</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="page-analytics" class="content-area page-content" style="display:none;">
+                <div class="stats-grid">
+                    <div class="stat-card"><div class="stat-icon amber"><i class="fas fa-chart-bar"></i></div><div class="stat-value">3.2M</div><div class="stat-label">Total Requests (30d)</div></div>
+                    <div class="stat-card"><div class="stat-icon green"><i class="fas fa-check-circle"></i></div><div class="stat-value">99.7%</div><div class="stat-label">Success Rate</div></div>
+                    <div class="stat-card"><div class="stat-icon blue"><i class="fas fa-database"></i></div><div class="stat-value">48ms</div><div class="stat-label">Avg Query Time</div></div>
+                    <div class="stat-card"><div class="stat-icon red"><i class="fas fa-exclamation-triangle"></i></div><div class="stat-value">12</div><div class="stat-label">Slow Queries Detected</div></div>
+                </div>
+                <div class="card"><div class="card-header"><h3><i class="fas fa-chart-line" style="color:var(--accent);margin-right:8px;"></i> Performance Trends</h3></div><div class="card-body"><div class="chart-container"><canvas id="perfChart"></canvas></div></div></div>
+            </div>
+
+            <div id="page-settings" class="content-area page-content" style="display:none;">
+                <div class="card">
+                    <div class="card-header"><h3><i class="fas fa-cog" style="color:var(--accent);margin-right:8px;"></i> Application Settings</h3><button class="btn btn-sm btn-primary"><i class="fas fa-save"></i> Save</button></div>
+                    <div class="card-body">
+                        <div class="form-group"><label>Application Name</label><input class="form-control" value="PhoenixPHP Application"></div>
+                        <div class="form-group"><label>Environment</label><input class="form-control" value="production"></div>
+                        <div class="form-group"><label>Debug Mode</label><input class="form-control" value="false"></div>
+                        <div class="form-group"><label>Session Lifetime (minutes)</label><input class="form-control" value="720"></div>
+                        <div class="form-group"><label>Cache Driver</label><input class="form-control" value="redis"></div>
+                        <div class="form-group"><label>Rate Limit (API requests/hour)</label><input class="form-control" value="100"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="js/phoenix.js"></script>
+</body>
+</html>
