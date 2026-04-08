@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhoenixPHP — Login</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/phoenix.css">
+</head>
+<body>
+    <div class="login-wrapper">
+        <div class="login-card">
+            <div class="login-logo">
+                <span class="logo-icon">&#x1F426;&#x200D;&#x1F525;</span>
+                <h1>Phoenix<span>PHP</span></h1>
+                <p>by CDAC Programming</p>
+            </div>
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" class="form-control" placeholder="admin@example.com" value="admin@example.com">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" class="form-control" placeholder="Enter your password" value="demo1234">
+                </div>
+                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:24px;">
+                    <label style="display:flex; align-items:center; gap:8px; font-size:13px; color:var(--text-muted); cursor:pointer;">
+                        <input type="checkbox" checked style="accent-color:var(--accent);"> Remember me
+                    </label>
+                    <a href="#" style="font-size:13px; color:var(--accent); text-decoration:none;">Forgot password?</a>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-sign-in-alt"></i> Sign In
+                </button>
+            </form>
+            <div style="text-align:center; margin-top:24px; padding-top:24px; border-top:1px solid var(--border);">
+                <p style="font-size:13px; color:var(--text-muted);">
+                    Protected by PhoenixPHP Auth &bull; CSRF &bull; Rate Limiting &bull; RBAC
+                </p>
+            </div>
+        </div>
+    </div>
+    <script>
+        function handleLogin(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Authenticating...';
+            setTimeout(() => { window.location.href = 'dashboard.html'; }, 1200);
+        }
+    </script>
+</body>
+</html>
