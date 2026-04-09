@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            width: 600px;
+            height: 600px;
+            background: #0f0f1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Inter', sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+        body::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(245,158,11,0.15), transparent 70%);
+            border-radius: 50%;
+        }
+        .container {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        .icon {
+            font-size: 160px;
+            color: #f59e0b;
+            filter: drop-shadow(0 0 40px rgba(245,158,11,0.5)) drop-shadow(0 0 80px rgba(245,158,11,0.2));
+            margin-bottom: 24px;
+        }
+        h1 {
+            font-size: 64px;
+            font-weight: 800;
+            color: #e8e8f0;
+            letter-spacing: -2px;
+        }
+        h1 span { color: #f59e0b; }
+        .sub {
+            font-size: 14px;
+            color: #5a6380;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-top: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="icon"><i class="fas fa-fire"></i></div>
+        <h1>Phoenix<span>PHP</span></h1>
+        <div class="sub">by CDAC Programming</div>
+    </div>
+</body>
+</html>
