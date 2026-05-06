@@ -158,10 +158,27 @@ switch ($segments[0] ?? '') {
         $db = db();
         $date = getParam('date', date('Y-m-d'));
         $stats = [];
-        $stats['total_output'] = $db->query("SELECT COALESCE(SUM(good_qty),0) as t FROM production_runs WHERE run_date = '{$db->real_escape_string($date)}'")->fetch_assoc()['t'];
-        $stats['avg_efficiency'] = $db->query("SELECT ROUND(AVG(efficiency),1) as e FROM production_runs WHERE run_date = '{$db->real_escape_string($date)}' AND status = 'completed'")->fetch_assoc()['e'] ?? 0;
-        $stats['avg_quality'] = $db->query("SELECT ROUND(AVG(quality_rate),1) as q FROM production_runs WHERE run_date = '{$db->real_escape_string($date)}' AND status = 'completed'")->fetch_assoc()['q'] ?? 0;
-        $stats['total_downtime'] = $db->query("SELECT COALESCE(SUM(duration_minutes),0) as d FROM production_downtime WHERE DATE(started_at) = '{$db->real_escape_string($date)}'")->fetch_assoc()['d'];
+
+        $stmt = $db->prepare("SELECT COALESCE(SUM(good_qty),0) as t FROM production_runs WHERE run_date = ?");
+        $stmt->bind_param('s', $date);
+        $stmt->execute();
+        $stats['total_output'] = $stmt->get_result()->fetch_assoc()['t'];
+
+        $stmt = $db->prepare("SELECT ROUND(AVG(efficiency),1) as e FROM production_runs WHERE run_date = ? AND status = 'completed'");
+        $stmt->bind_param('s', $date);
+        $stmt->execute();
+        $stats['avg_efficiency'] = $stmt->get_result()->fetch_assoc()['e'] ?? 0;
+
+        $stmt = $db->prepare("SELECT ROUND(AVG(quality_rate),1) as q FROM production_runs WHERE run_date = ? AND status = 'completed'");
+        $stmt->bind_param('s', $date);
+        $stmt->execute();
+        $stats['avg_quality'] = $stmt->get_result()->fetch_assoc()['q'] ?? 0;
+
+        $stmt = $db->prepare("SELECT COALESCE(SUM(duration_minutes),0) as d FROM production_downtime WHERE DATE(started_at) = ?");
+        $stmt->bind_param('s', $date);
+        $stmt->execute();
+        $stats['total_downtime'] = $stmt->get_result()->fetch_assoc()['d'];
+
         $stats['active_lines'] = $db->query("SELECT COUNT(*) as c FROM production_lines WHERE status = 'running'")->fetch_assoc()['c'];
         ok($stats);
         break;

@@ -185,7 +185,8 @@ class SecurityHelper {
      */
     public static function checkRateLimit($key, $limit = 100, $window = 3600) {
         $cacheKey = "ratelimit_{$key}";
-        $file = '/opt/lampp/htdocs/logs/ratelimit_' . md5($key) . '.json';
+        $logPath = class_exists('Phoenix\\Config') ? Config::get('app.logging.path', __DIR__ . '/../logs') : __DIR__ . '/../logs';
+        $file = $logPath . '/ratelimit_' . md5($key) . '.json';
 
         $data = [];
         if (file_exists($file)) {

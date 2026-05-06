@@ -10,8 +10,11 @@ namespace Phoenix;
 require_once __DIR__ . '/Database.php';
 
 class Auth {
-    private const SESSION_TIMEOUT = 1800; // 30 minutes
+    private const SESSION_TIMEOUT = 1800; // 30 minutes (default for privileged roles)
     private const REMEMBER_ME_DURATION = 2592000; // 30 days
+
+    // Groups that are exempt from session timeout (long-running pages)
+    private const NO_TIMEOUT_GROUPS = ['Lab', 'Operator', 'Inspection'];
 
     /**
      * Check if user is authenticated
@@ -27,13 +30,25 @@ class Auth {
             return false;
         }
 
-        // Check session timeout
+        // Check session timeout — only for privileged roles
+        // Lab, Operator, and Inspection users are exempt (they keep pages open all day)
         if (isset($_SESSION['last_activity'])) {
-            $elapsed = time() - $_SESSION['last_activity'];
+            $groups = $_SESSION['groups'] ?? [];
+            if (is_string($groups)) $groups = array_map('trim', explode(',', $groups));
 
-            if ($elapsed > self::SESSION_TIMEOUT) {
-                self::logout();
-                return false;
+            $isExempt = !empty(array_intersect(self::NO_TIMEOUT_GROUPS, $groups));
+
+            if (!$isExempt) {
+                $elapsed = time() - $_SESSION['last_activity'];
+                // Use per-user timeout if set, otherwise default
+                $timeout = (isset($_SESSION['session_timeout']) && $_SESSION['session_timeout'] > 0)
+                    ? $_SESSION['session_timeout'] * 60
+                    : self::SESSION_TIMEOUT;
+
+                if ($elapsed > $timeout) {
+                    self::logout();
+                    return false;
+                }
             }
         }
 

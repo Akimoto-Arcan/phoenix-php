@@ -161,18 +161,19 @@ if (session_status() === PHP_SESSION_NONE) {
 
     session_start();
 
-    // Role-based session timeout check
-    // Only enforce timeout for privileged roles (admins/supervisors)
-    // Regular operators never timeout to allow long data entry sessions
+    // Group-based session timeout check
+    // Lab, Operator, and Inspection users are exempt (they keep pages open all shift)
+    // All other users are subject to timeout with per-user override support
     if (isset($_SESSION['last_activity']) && isset($_SESSION['role'])) {
-        $elapsed = time() - $_SESSION['last_activity'];
+        $noTimeoutGroups = ['Lab', 'Operator', 'Inspection'];
+        $groups = $_SESSION['groups'] ?? [];
+        if (is_string($groups)) $groups = array_map('trim', explode(',', $groups));
 
-        // Determine if user is privileged (subject to timeout)
-        $privilegedRoles = $sessionConfig['privileged_roles'] ?? ['SuperAdmin', 'Supervisor'];
-        $isPrivileged = in_array($_SESSION['role'], $privilegedRoles, true);
+        $isExempt = !empty(array_intersect($noTimeoutGroups, $groups));
 
-        // Only apply timeout to privileged users
-        if ($isPrivileged) {
+        if (!$isExempt) {
+            $elapsed = time() - $_SESSION['last_activity'];
+
             // Check for user-specific timeout (in minutes), otherwise use system default
             if (isset($_SESSION['session_timeout']) && $_SESSION['session_timeout'] > 0) {
                 $timeout = $_SESSION['session_timeout'] * 60; // Convert minutes to seconds
@@ -196,13 +197,11 @@ if (session_status() === PHP_SESSION_NONE) {
                     header('Location: /login.php');
                     exit();
                 } else {
-                    // If headers already sent, use JavaScript redirect
                     echo '<script>window.location.href = "/login.php";</script>';
                     exit();
                 }
             }
         }
-        // Regular users: no timeout check - sessions never expire due to inactivity
     }
     $_SESSION['last_activity'] = time();
     $_SESSION['LAST_ACTIVITY'] = time(); // Uppercase for session API compatibility
