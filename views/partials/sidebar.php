@@ -68,6 +68,13 @@ $moduleItems = $moduleNavItems ?? [];
             </a>
         </div>
         <?php endif; ?>
+
+        <div class="nav-section">
+            <a href="/docs" class="nav-item <?= strpos($currentPath, '/docs') === 0 ? 'active' : '' ?>">
+                <span style="width:20px;text-align:center;font-size:16px">&#x1F4D6;</span>
+                Help &amp; Docs
+            </a>
+        </div>
     </nav>
 
     <div class="sidebar-footer">

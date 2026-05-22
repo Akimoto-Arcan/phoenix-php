@@ -47,6 +47,7 @@ class_alias('Phoenix\Router', 'Router');
 class_alias('Phoenix\View', 'View');
 class_alias('Phoenix\Settings', 'Settings');
 class_alias('Phoenix\ModuleLoader', 'ModuleLoader');
+class_alias('Phoenix\Markdown', 'Markdown');
 class_alias('Phoenix\PaymentGatewayFactory', 'PaymentGatewayFactory');
 class_alias('Phoenix\PaymentResult', 'PaymentResult');
 

@@ -82,4 +82,11 @@ Router::group(['middleware' => ['auth']], function () {
     Router::get('/', function () { redirect('/dashboard'); });
     Router::get('/dashboard', 'dashboard.index');
     Router::get('/settings', 'settings.index');
+    Router::get('/docs/{page...}', function ($params) {
+        $page = $params['page'] ?? 'getting-started';
+        echo \Phoenix\View::render('docs.index', ['page' => $page]);
+    });
+    Router::get('/docs', function () {
+        echo \Phoenix\View::render('docs.index', ['page' => 'getting-started']);
+    });
 });
