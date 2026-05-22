@@ -29,6 +29,7 @@
                 </div>
                 <div class="nav-section">
                     <div class="nav-section-title">Modules</div>
+                    <a href="#" class="nav-item" data-page="pos">&#x1F4B0; Point of Sale</a>
                     <a href="#" class="nav-item" data-page="cmms">&#x1F527; Maintenance (CMMS)</a>
                     <a href="#" class="nav-item" data-page="inventory">&#x1F4E6; Inventory</a>
                     <a href="#" class="nav-item" data-page="production">&#x1F3ED; Production</a>
@@ -73,7 +74,7 @@
                     <p style="color:var(--text-muted);font-size:14px" id="dateDisplay"></p>
                 </div>
                 <div class="stats-grid">
-                    <div class="stat-card"><div class="stat-icon amber">&#9879;</div><div class="stat-value">6</div><div class="stat-label">Installed Modules</div><div class="stat-change up">&#x2191; All active</div></div>
+                    <div class="stat-card"><div class="stat-icon amber">&#9879;</div><div class="stat-value">7</div><div class="stat-label">Installed Modules</div><div class="stat-change up">&#x2191; All active</div></div>
                     <div class="stat-card"><div class="stat-icon blue">&#128100;</div><div class="stat-value">128</div><div class="stat-label">Active Users</div><div class="stat-change up">&#x2191; 12% this week</div></div>
                     <div class="stat-card"><div class="stat-icon green">&#x2714;</div><div class="stat-value">99.9%</div><div class="stat-label">Uptime</div></div>
                     <div class="stat-card"><div class="stat-icon red">&#128196;</div><div class="stat-value">86+</div><div class="stat-label">API Endpoints</div></div>
@@ -88,6 +89,7 @@
                     <div class="card">
                         <div class="card-header"><h3>Installed Modules</h3></div>
                         <div class="card-body">
+                            <div class="status-row"><span class="status-label"><span class="status-indicator online"></span>Point of Sale</span><span class="status-value">v1.0.0</span></div>
                             <div class="status-row"><span class="status-label"><span class="status-indicator online"></span>CMMS — Maintenance</span><span class="status-value">v1.0.0</span></div>
                             <div class="status-row"><span class="status-label"><span class="status-indicator online"></span>Inventory Management</span><span class="status-value">v1.0.0</span></div>
                             <div class="status-row"><span class="status-label"><span class="status-indicator online"></span>Production Tracker</span><span class="status-value">v1.0.0</span></div>
@@ -95,6 +97,47 @@
                             <div class="status-row"><span class="status-label"><span class="status-indicator online"></span>Scheduling</span><span class="status-value">v1.0.0</span></div>
                             <div class="status-row"><span class="status-label"><span class="status-indicator online"></span>Reporting</span><span class="status-value">v1.0.0</span></div>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- POS -->
+            <div id="page-pos" class="content-area page-content" style="display:none">
+                <div class="stats-grid">
+                    <div class="stat-card"><div class="stat-icon green">&#x1F4B0;</div><div class="stat-value">$4,280</div><div class="stat-label">Today's Sales</div><div class="stat-change up">&#x2191; 18% vs yesterday</div></div>
+                    <div class="stat-card"><div class="stat-icon blue">&#x1F6D2;</div><div class="stat-value">47</div><div class="stat-label">Orders Today</div></div>
+                    <div class="stat-card"><div class="stat-icon amber">&#x1F4B3;</div><div class="stat-value">$91.06</div><div class="stat-label">Avg Order Value</div></div>
+                    <div class="stat-card"><div class="stat-icon red">&#x1F4B5;</div><div class="stat-value">62%</div><div class="stat-label">Cash Payments</div></div>
+                </div>
+                <div class="grid-2">
+                    <div class="card">
+                        <div class="card-header"><h3>POS Register</h3><span class="badge badge-success">Session Open</span></div>
+                        <div class="card-body">
+                            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">
+                                <div><div class="form-group"><label>Search Products</label><input type="text" class="form-control" placeholder="Scan barcode or type SKU..." value="BRG-6205"></div></div>
+                                <div style="background:var(--bg-primary);border-radius:var(--radius-sm);padding:16px">
+                                    <div style="font-size:12px;color:var(--text-muted);text-transform:uppercase;margin-bottom:8px">Cart (3 items)</div>
+                                    <div style="font-size:13px;margin-bottom:4px">Ball Bearing 6205 &times; 2 <span style="float:right">$25.00</span></div>
+                                    <div style="font-size:13px;margin-bottom:4px">V-Belt A68 &times; 1 <span style="float:right">$15.20</span></div>
+                                    <div style="font-size:13px;margin-bottom:4px">Grease NLGI-2 &times; 1 <span style="float:right">$22.00</span></div>
+                                    <div style="border-top:1px solid var(--border);margin-top:8px;padding-top:8px;font-weight:700">Total <span style="float:right;color:var(--accent)">$66.55</span></div>
+                                </div>
+                            </div>
+                            <div style="display:flex;gap:8px">
+                                <button class="btn btn-success" style="flex:1">&#x1F4B5; Cash</button>
+                                <button class="btn btn-info" style="flex:1">&#x1F4B3; Card</button>
+                                <button class="btn btn-outline" style="flex:1">&#x1F4C4; Invoice</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header"><h3>Recent Orders</h3></div>
+                        <div class="card-body"><div class="table-wrapper"><table class="phoenix-table"><thead><tr><th>Order #</th><th>Total</th><th>Payment</th><th>Status</th></tr></thead><tbody>
+                            <tr><td>POS-2026-0047</td><td>$125.40</td><td><span class="badge badge-success">Cash</span></td><td><span class="badge badge-success">Paid</span></td></tr>
+                            <tr><td>POS-2026-0046</td><td>$89.99</td><td><span class="badge badge-info">Card</span></td><td><span class="badge badge-success">Paid</span></td></tr>
+                            <tr><td>POS-2026-0045</td><td>$342.00</td><td><span class="badge badge-warning">Invoice</span></td><td><span class="badge badge-warning">Pending</span></td></tr>
+                            <tr><td>POS-2026-0044</td><td>$55.75</td><td><span class="badge badge-success">Cash</span></td><td><span class="badge badge-success">Paid</span></td></tr>
+                        </tbody></table></div></div>
                     </div>
                 </div>
             </div>
@@ -290,7 +333,7 @@
         });
 
         var titles = {
-            'dashboard': 'Dashboard', 'cmms': 'Maintenance (CMMS)', 'inventory': 'Inventory',
+            'dashboard': 'Dashboard', 'pos': 'Point of Sale', 'cmms': 'Maintenance (CMMS)', 'inventory': 'Inventory',
             'production': 'Production', 'chat': 'Chat', 'scheduling': 'Scheduling',
             'reports': 'Reports', 'users': 'Users & RBAC', 'settings': 'Settings'
         };

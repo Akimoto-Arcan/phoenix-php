@@ -1,6 +1,6 @@
 # Phoenix PHP — ERP & CMMS Framework
 
-A plug-and-play PHP framework for building ERP systems, CMMS platforms, and internal business tools. Clone it, run the installer, and you have a working application with authentication, role-based access control, and 6 production-ready modules.
+A plug-and-play PHP framework for building ERP systems, CMMS platforms, POS terminals, and internal business tools. Clone it, run the installer, and you have a working application with authentication, role-based access control, and 7 production-ready modules.
 
 ## Quick Start
 
@@ -36,6 +36,7 @@ Then visit `http://your-server/` in a browser. The install wizard handles everyt
 
 | Module | Tables | API Endpoints | Description |
 |--------|--------|---------------|-------------|
+| **POS** | 10 | 28 | Register, cash/card payments, invoicing, PO, barcode scanning |
 | **CMMS** | 6 | 14 | Work orders, PM schedules, equipment, parts inventory |
 | **Inventory** | 8 | 5+ | Items, stock levels, receiving, shipping, low-stock alerts |
 | **Production** | 5 | 9 | Lines, runs, downtime tracking, defect logging, OEE |
@@ -66,6 +67,7 @@ phoenix-php/
 │   ├── Settings.php       # Key-value settings
 │   ├── ModuleLoader.php   # Module discovery & management
 │   ├── Cache.php          # Multi-layer caching
+│   ├── PaymentGateway.php # Payment gateway interface + factory
 │   ├── Validator.php      # Input validation
 │   └── ...
 ├── views/                 # PHP view templates
@@ -77,6 +79,7 @@ phoenix-php/
 │   ├── web.php            # Web routes
 │   └── api.php            # API routes
 ├── modules/               # Pluggable modules
+│   ├── pos/               # Point of Sale + Invoicing + PO
 │   ├── cmms/
 │   ├── inventory-management/
 │   ├── production-tracker/
@@ -143,6 +146,29 @@ curl -b cookies.txt http://localhost/api/v1/modules/installed
 # Module APIs are proxied through the router
 # Example: CMMS work orders
 curl -b cookies.txt http://localhost/modules/cmms/api/routes.php?path=work-orders
+```
+
+## Payment Gateways
+
+The POS module uses a pluggable payment gateway interface. Built-in gateways:
+
+| Gateway | Description | Setup |
+|---------|-------------|-------|
+| **Cash** | Always succeeds, calculates change | Default, no config needed |
+| **Manual Card** | For external card terminals | Operator confirms payment on terminal |
+| **Stripe** | Full Stripe API integration | `composer require stripe/stripe-php` + set `STRIPE_SECRET_KEY` |
+| **Square** | Full Square API integration | `composer require square/square` + set `SQUARE_ACCESS_TOKEN` |
+
+To add a custom gateway, implement `Phoenix\PaymentGatewayInterface` and register it:
+
+```php
+PaymentGatewayFactory::register('my-gateway', MyGateway::class);
+```
+
+Set the active gateway in Settings or `.env`:
+```
+POS_PAYMENT_GATEWAY=stripe
+STRIPE_SECRET_KEY=sk_live_...
 ```
 
 ## Theming

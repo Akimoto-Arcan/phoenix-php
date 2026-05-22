@@ -1,0 +1,38 @@
+{
+    "id": "pos",
+    "name": "Point of Sale",
+    "version": "1.0.0",
+    "description": "Full POS system with cash and card payments, barcode scanning, invoicing, purchase orders, and inventory integration. Supports pluggable payment gateways (Stripe, Square, manual card entry).",
+    "author": "CDAC Programming",
+    "category": "Sales",
+    "icon": "💰",
+    "color": "#8b5cf6",
+    "requires": "phoenix-php >= 1.0.0",
+    "dependencies": ["inventory-management"],
+    "nav": [
+        {
+            "label": "Point of Sale",
+            "icon": "💰",
+            "href": "/modules/pos/views/",
+            "permission": "pos.read"
+        }
+    ],
+    "api_prefix": "/api/v1/pos",
+    "endpoints": 28,
+    "features": [
+        "Register management with cash drawer sessions",
+        "Product search by SKU, UPC, or name with barcode scanner support",
+        "Cash payments with change calculation",
+        "Credit card processing via pluggable payment gateways",
+        "Manual card entry for external terminals",
+        "Stripe and Square gateway stubs (ready to configure)",
+        "Invoice creation and management with PDF generation",
+        "Purchase order management with inventory receiving",
+        "Customer directory with tax-exempt support",
+        "Configurable tax rates",
+        "Automatic inventory stock deduction on sale",
+        "Refund and void processing",
+        "Sales dashboard with daily/weekly reporting",
+        "Full audit trail on all transactions"
+    ]
+}

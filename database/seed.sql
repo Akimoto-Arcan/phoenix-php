@@ -36,7 +36,11 @@ INSERT IGNORE INTO `permissions` (`key`, `display_name`, `category`) VALUES
 ('dashboard.paperwork', 'Paperwork Dashboard', 'dashboard'),
 ('dashboard.analytics', 'Analytics Dashboard', 'dashboard'),
 ('dashboard.welcome', 'Welcome Dashboard', 'dashboard'),
-('dashboard.options', 'Options Dashboard', 'dashboard');
+('dashboard.options', 'Options Dashboard', 'dashboard'),
+('pos.read', 'View POS', 'pos'),
+('pos.write', 'Process Sales', 'pos'),
+('pos.refund', 'Process Refunds', 'pos'),
+('pos.admin', 'POS Administration', 'pos');
 
 -- Role-permission mappings
 -- Admin gets everything except implicit SuperAdmin
@@ -95,6 +99,16 @@ WHERE r.name = 'Shipping' AND p.`key` IN (
     'dashboard.shipping', 'dashboard.welcome', 'dashboard.options'
 );
 
+-- Supervisor gets POS read+write
+INSERT IGNORE INTO `role_permissions` (`role_id`, `permission_id`)
+SELECT r.id, p.id FROM `roles` r, `permissions` p
+WHERE r.name = 'Supervisor' AND p.`key` IN ('pos.read', 'pos.write', 'pos.refund');
+
+-- Operator gets POS read+write (can ring up sales)
+INSERT IGNORE INTO `role_permissions` (`role_id`, `permission_id`)
+SELECT r.id, p.id FROM `roles` r, `permissions` p
+WHERE r.name = 'Operator' AND p.`key` IN ('pos.read', 'pos.write');
+
 -- Default settings
 INSERT IGNORE INTO `settings` (`key`, `value`, `type`, `category`, `description`, `is_public`) VALUES
 ('app.name', 'Phoenix ERP', 'string', 'general', 'Application display name', 1),
@@ -103,4 +117,8 @@ INSERT IGNORE INTO `settings` (`key`, `value`, `type`, `category`, `description`
 ('auth.max_failed_attempts', '5', 'integer', 'security', 'Lock account after N failed logins', 0),
 ('auth.lockout_minutes', '15', 'integer', 'security', 'Account lockout duration in minutes', 0),
 ('auth.password_min_length', '8', 'integer', 'security', 'Minimum password length', 0),
-('auth.session_timeout', '30', 'integer', 'security', 'Default session timeout in minutes', 0);
+('auth.session_timeout', '30', 'integer', 'security', 'Default session timeout in minutes', 0),
+('pos.payment_gateway', 'cash', 'string', 'pos', 'Default payment gateway', 0),
+('pos.default_tax_rate', '7.000', 'string', 'pos', 'Default tax rate percentage', 0),
+('pos.currency', 'USD', 'string', 'pos', 'Currency code', 0),
+('pos.receipt_header', 'Phoenix ERP', 'string', 'pos', 'Receipt header text', 0);

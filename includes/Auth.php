@@ -510,6 +510,12 @@ class Auth {
             'dashboard.analytics' => ['Admin', 'Supervisor'],
             'dashboard.welcome' => ['Admin', 'Supervisor', 'Operator', 'Inspection', 'Lab', 'Maintenance', 'Shipping'],
             'dashboard.options' => ['Admin', 'Supervisor', 'Operator', 'Inspection', 'Lab', 'Maintenance', 'Shipping'],
+
+            // POS permissions
+            'pos.read' => ['Admin', 'Supervisor', 'Operator'],
+            'pos.write' => ['Admin', 'Supervisor', 'Operator'],
+            'pos.refund' => ['Admin', 'Supervisor'],
+            'pos.admin' => ['Admin'],
         ];
     }
 
