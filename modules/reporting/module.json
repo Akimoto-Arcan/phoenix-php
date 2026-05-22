@@ -21,5 +21,12 @@
         "Saved report templates",
         "Cross-module data access",
         "Role-based report visibility"
+    ],
+    "nav": [
+        {
+            "label": "Reports",
+            "icon": "\ud83d\udcca",
+            "href": "/modules/reporting/views/"
+        }
     ]
 }

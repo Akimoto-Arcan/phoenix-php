@@ -21,5 +21,13 @@
         "Shift reports with automatic calculations",
         "Downtime logging with reason codes",
         "Historical production data with trend analysis"
+    ],
+    "nav": [
+        {
+            "label": "Production",
+            "icon": "\ud83c\udfed",
+            "href": "/modules/production-tracker/views/",
+            "permission": "production.read"
+        }
     ]
 }

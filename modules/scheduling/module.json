@@ -21,5 +21,12 @@
         "Department/team-based scheduling",
         "Schedule publishing and notifications",
         "Time-off request integration"
+    ],
+    "nav": [
+        {
+            "label": "Scheduling",
+            "icon": "\ud83d\udcc5",
+            "href": "/modules/scheduling/views/"
+        }
     ]
 }

@@ -247,7 +247,7 @@ class Auth {
             $db = Database::pdo('users');
 
             $stmt = $db->prepare("
-                SELECT id, username, full_name, password, role, groups, shift, mobile_whitelisted, approved, reset, session_timeout
+                SELECT id, username, full_name, password, role, groups, shift, mobile_whitelisted, approved, is_active, reset, session_timeout, failed_login_count, locked_until
                 FROM users
                 WHERE username = :username
                 LIMIT 1
@@ -277,10 +277,14 @@ class Auth {
                 return 'Your account is awaiting admin approval';
             }
 
-            // Note: 'active' column doesn't exist in users table - skip this check
-            // if (isset($user['active']) && !$user['active']) {
-            //     return 'Account is inactive';
-            // }
+            if (isset($user['is_active']) && !$user['is_active']) {
+                return 'Account is disabled. Contact administrator.';
+            }
+
+            // Check account lockout
+            if (!empty($user['locked_until']) && strtotime($user['locked_until']) > time()) {
+                return 'Account is temporarily locked. Try again later.';
+            }
 
             // Verify password
             if (!password_verify($password, $user['password'])) {
@@ -289,6 +293,19 @@ class Auth {
                     'reason' => 'invalid_password',
                     'ip' => $_SERVER['REMOTE_ADDR'] ?? ''
                 ]);
+
+                // Increment failed login count
+                try {
+                    $failCount = ($user['failed_login_count'] ?? 0) + 1;
+                    $lockUntil = null;
+                    if ($failCount >= 5) {
+                        $lockUntil = date('Y-m-d H:i:s', time() + 900); // 15 min lockout
+                    }
+                    $updateStmt = $db->prepare("UPDATE users SET failed_login_count = :count, locked_until = :locked WHERE id = :id");
+                    $updateStmt->execute(['count' => $failCount, 'locked' => $lockUntil, 'id' => $user['id']]);
+                } catch (\Exception $e) {
+                    error_log("Failed to update login count: " . $e->getMessage());
+                }
 
                 return 'Invalid username or password';
             }
@@ -379,16 +396,15 @@ class Auth {
                 $_SESSION['system_build'] = 'Unknown';
             }
 
-            // Note: last_login columns don't exist in users table - skip this update
-            // $stmt = $db->prepare("
-            //     UPDATE users
-            //     SET last_login = NOW(), last_login_ip = :ip
-            //     WHERE id = :id
-            // ");
-            // $stmt->execute([
-            //     'id' => $user['id'],
-            //     'ip' => $_SERVER['REMOTE_ADDR'] ?? 'unknown'
-            // ]);
+            $stmt = $db->prepare("
+                UPDATE users
+                SET last_login = NOW(), last_login_ip = :ip, failed_login_count = 0, locked_until = NULL
+                WHERE id = :id
+            ");
+            $stmt->execute([
+                'id' => $user['id'],
+                'ip' => $_SERVER['REMOTE_ADDR'] ?? 'unknown'
+            ]);
 
             self::logActivity('auth.login_success', [
                 'username' => $username,

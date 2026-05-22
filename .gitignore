@@ -23,3 +23,9 @@ Thumbs.db
 
 # Build
 /dist/
+
+# Install lock
+/storage/.installed
+
+# Module install markers
+modules/*/.installed

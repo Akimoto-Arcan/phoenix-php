@@ -13,17 +13,9 @@
     "nav": [
         {
             "label": "Inventory",
-            "icon": "fas fa-boxes",
-            "url": "/modules/inventory-management/views/dashboard.php",
-            "permission": "inventory.read",
-            "children": [
-                { "label": "Dashboard", "url": "/modules/inventory-management/views/dashboard.php", "icon": "fas fa-tachometer-alt" },
-                { "label": "Items", "url": "/modules/inventory-management/views/items.php", "icon": "fas fa-list" },
-                { "label": "Receiving", "url": "/modules/inventory-management/views/receiving.php", "icon": "fas fa-truck-loading" },
-                { "label": "Fulfillment", "url": "/modules/inventory-management/views/fulfillment.php", "icon": "fas fa-shipping-fast" },
-                { "label": "Suppliers", "url": "/modules/inventory-management/views/suppliers.php", "icon": "fas fa-handshake" },
-                { "label": "Reports", "url": "/modules/inventory-management/views/reports.php", "icon": "fas fa-chart-bar" }
-            ]
+            "icon": "\ud83d\udce6",
+            "href": "/modules/inventory-management/views/",
+            "permission": "production.read"
         }
     ],
     "api_prefix": "/api/v1/inventory",

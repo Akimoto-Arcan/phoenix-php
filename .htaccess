@@ -1,0 +1,25 @@
+RewriteEngine On
+RewriteBase /
+
+# Static assets pass through if file exists
+RewriteCond %{REQUEST_URI} \.(css|js|mjs|png|jpe?g|gif|webp|svg|ico|woff2?|ttf|eot|map|json)$ [NC]
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^ - [L]
+
+# Existing PHP files pass through (backward compatibility)
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^ - [L]
+
+# Existing directories pass through
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Block sensitive files and directories
+RewriteRule ^(includes|config|storage|vendor|database|\.git|\.claude)/ - [F,L]
+
+<FilesMatch "\.(env|env\..+|gitignore|lock|log|sql)$">
+    Require all denied
+</FilesMatch>
+
+# Front controller catch-all
+RewriteRule ^ index.php [L,QSA]

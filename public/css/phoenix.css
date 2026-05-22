@@ -771,3 +771,82 @@ body {
 @media (max-width: 480px) {
     .stats-grid { grid-template-columns: 1fr; }
 }
+
+/* ======== LIGHT THEME ======== */
+html[data-theme="light"] {
+    --bg-primary: #f5f7fa;
+    --bg-secondary: #ffffff;
+    --bg-card: #ffffff;
+    --bg-card-hover: #f8f9fb;
+    --bg-sidebar: #1e293b;
+    --bg-input: #f1f5f9;
+    --text-primary: #1e293b;
+    --text-secondary: #475569;
+    --text-muted: #94a3b8;
+    --accent: #f59e0b;
+    --accent-hover: #d97706;
+    --accent-glow: rgba(245, 158, 11, 0.1);
+    --success: #059669;
+    --danger: #dc2626;
+    --info: #2563eb;
+    --warning: #d97706;
+    --border: #e2e8f0;
+    --shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04);
+    --shadow-glow: 0 4px 14px rgba(245, 158, 11, 0.12);
+}
+
+html[data-theme="light"] .sidebar {
+    background: var(--bg-sidebar);
+    color: #e2e8f0;
+}
+
+html[data-theme="light"] .sidebar .brand-text,
+html[data-theme="light"] .sidebar .nav-section-title,
+html[data-theme="light"] .sidebar .nav-item,
+html[data-theme="light"] .sidebar .user-info .name {
+    color: #cbd5e1;
+}
+
+html[data-theme="light"] .sidebar .nav-item:hover {
+    background: rgba(255,255,255,0.08);
+    color: #f1f5f9;
+}
+
+html[data-theme="light"] .sidebar .nav-item.active {
+    background: var(--accent-glow);
+    color: var(--accent);
+}
+
+html[data-theme="light"] .sidebar-header,
+html[data-theme="light"] .sidebar-footer {
+    border-color: rgba(255,255,255,0.08);
+}
+
+html[data-theme="light"] .phoenix-table td {
+    border-bottom-color: var(--border);
+}
+
+html[data-theme="light"] .code-block {
+    background: #f8fafc;
+    border-color: var(--border);
+}
+
+html[data-theme="light"] .topbar {
+    background: var(--bg-secondary);
+    border-bottom-color: var(--border);
+}
+
+html[data-theme="light"] .login-wrapper {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+html[data-theme="light"] .login-wrapper::before,
+html[data-theme="light"] .login-wrapper::after {
+    display: none;
+}
+
+html[data-theme="light"] .login-card {
+    background: #ffffff;
+    border-color: rgba(0,0,0,0.08);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+}

@@ -13,17 +13,9 @@
     "nav": [
         {
             "label": "Maintenance",
-            "icon": "fas fa-wrench",
-            "url": "/modules/cmms/views/dashboard.php",
-            "permission": "maintenance.read",
-            "children": [
-                { "label": "Dashboard", "url": "/modules/cmms/views/dashboard.php", "icon": "fas fa-tachometer-alt" },
-                { "label": "Work Orders", "url": "/modules/cmms/views/work-orders.php", "icon": "fas fa-clipboard-list" },
-                { "label": "PM Schedule", "url": "/modules/cmms/views/pm-schedule.php", "icon": "fas fa-calendar-check" },
-                { "label": "Equipment", "url": "/modules/cmms/views/equipment.php", "icon": "fas fa-cogs" },
-                { "label": "Parts", "url": "/modules/cmms/views/parts.php", "icon": "fas fa-puzzle-piece" },
-                { "label": "Reports", "url": "/modules/cmms/views/reports.php", "icon": "fas fa-chart-bar" }
-            ]
+            "icon": "🔧",
+            "href": "/modules/cmms/views/",
+            "permission": "maintenance.read"
         }
     ],
     "api_prefix": "/api/v1/maintenance",

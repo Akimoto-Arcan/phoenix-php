@@ -21,5 +21,12 @@
         "User presence (online/offline/away)",
         "Polling-based real-time updates",
         "Admin channel management"
+    ],
+    "nav": [
+        {
+            "label": "Chat",
+            "icon": "\ud83d\udcac",
+            "href": "/modules/chat-system/views/"
+        }
     ]
 }

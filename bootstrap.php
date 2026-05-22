@@ -43,6 +43,10 @@ class_alias('Phoenix\SecurityHelper', 'SecurityHelper');
 class_alias('Phoenix\Validator', 'Validator');
 class_alias('Phoenix\Cache', 'Cache');
 class_alias('Phoenix\Performance', 'Performance');
+class_alias('Phoenix\Router', 'Router');
+class_alias('Phoenix\View', 'View');
+class_alias('Phoenix\Settings', 'Settings');
+class_alias('Phoenix\ModuleLoader', 'ModuleLoader');
 
 try {
     Config::load();
