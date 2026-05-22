@@ -198,10 +198,10 @@ if (session_status() === PHP_SESSION_NONE) {
 
                 // Redirect to login page
                 if (!headers_sent()) {
-                    header('Location: /login.php');
+                    header('Location: /login');
                     exit();
                 } else {
-                    echo '<script>window.location.href = "/login.php";</script>';
+                    echo '<script>window.location.href = "/login";</script>';
                     exit();
                 }
             }
@@ -412,7 +412,7 @@ function is_authenticated() {
 /**
  * Require authentication (redirect if not authenticated)
  */
-function require_auth($redirectUrl = '/index.html') {
+function require_auth($redirectUrl = '/login') {
     if (!is_authenticated()) {
         header("Location: {$redirectUrl}");
         exit;

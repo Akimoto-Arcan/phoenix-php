@@ -561,16 +561,17 @@ class Auth {
             // Create activity_log table if it doesn't exist
             $db->exec("
                 CREATE TABLE IF NOT EXISTS activity_log (
-                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
                     username VARCHAR(100),
-                    action VARCHAR(100),
-                    details TEXT,
+                    action VARCHAR(100) NOT NULL,
+                    details JSON DEFAULT NULL,
                     ip_address VARCHAR(45),
-                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    user_agent TEXT DEFAULT NULL,
+                    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
                     INDEX idx_username (username),
                     INDEX idx_action (action),
                     INDEX idx_created_at (created_at)
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
             ");
 
             $stmt = $db->prepare("

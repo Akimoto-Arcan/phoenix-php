@@ -1,4 +1,4 @@
-<?php \Phoenix\View::extends('auth'); $pageTitle = 'Register'; ?>
+<?php \Phoenix\View::layout('auth'); $pageTitle = 'Register'; ?>
 <div class="login-card">
     <div class="login-logo">
         <span class="logo-icon">&#x1F525;</span>

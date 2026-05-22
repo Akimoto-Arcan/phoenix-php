@@ -71,7 +71,7 @@ class View
         return self::$sections[$name] ?? $default;
     }
 
-    public static function extends(string $layout): void
+    public static function layout(string $layout): void
     {
         self::$layout = $layout;
     }

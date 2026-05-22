@@ -126,13 +126,12 @@ function testDatabase(array $data): array {
     }
 
     $dbExists = false;
-    $result = $conn->query("SHOW DATABASES LIKE " . $conn->real_escape_string("'" . $name . "'"));
-    if (!$result) {
-        $result = $conn->query("SHOW DATABASES LIKE '{$conn->real_escape_string($name)}'");
-    }
-    // Simpler check
-    $r = $conn->query("SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = '" . $conn->real_escape_string($name) . "'");
+    $stmt = $conn->prepare("SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = ?");
+    $stmt->bind_param('s', $name);
+    $stmt->execute();
+    $r = $stmt->get_result();
     $dbExists = $r && $r->num_rows > 0;
+    $stmt->close();
 
     $conn->close();
 
@@ -282,6 +281,10 @@ function installModules(array $data): array {
     $errors = [];
 
     foreach ($selected as $moduleId) {
+        if (!preg_match('/^[a-zA-Z0-9_-]+$/', $moduleId)) {
+            $errors[] = "{$moduleId}: invalid module ID";
+            continue;
+        }
         $sqlFile = __DIR__ . '/modules/' . $moduleId . '/database/install.sql';
         if (!file_exists($sqlFile)) {
             $errors[] = "{$moduleId}: install.sql not found";
@@ -361,7 +364,7 @@ DB_HOST={$host}
 DB_PORT={$port}
 DB_DATABASE={$dbName}
 DB_USERNAME={$dbUser}
-DB_PASSWORD={$dbPass}
+DB_PASSWORD="{$dbPass}"
 
 # Users Database (same as primary for single-DB setup)
 USERS_DATABASE={$dbName}

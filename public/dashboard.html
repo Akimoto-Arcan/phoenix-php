@@ -1,1065 +1,362 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PhoenixPHP — Dashboard</title>
+    <title>PhoenixPHP — Dashboard Demo</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="css/phoenix.css">
+    <script>(function(){var t=localStorage.getItem('phoenix-theme')||'dark';if(t==='system')t=matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t)})()</script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
 </head>
 <body>
     <div class="app-wrapper">
-        <!-- Sidebar -->
-        <aside class="sidebar">
+        <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
-                <a href="#" class="brand">
-                    <span class="brand-icon"><i class="fas fa-fire" style="color:var(--accent);"></i></span>
+                <a href="#" class="brand" onclick="showPage('dashboard');return false">
+                    <span class="brand-icon">&#x1F525;</span>
                     <div>
                         <span class="brand-text">Phoenix<span>PHP</span></span>
-                        <span class="brand-sub">CDAC Programming</span>
+                        <span class="brand-sub">ERP &amp; CMMS</span>
                     </div>
                 </a>
             </div>
-
             <nav class="sidebar-nav">
                 <div class="nav-section">
                     <div class="nav-section-title">Main</div>
-                    <a href="#" class="nav-item active" onclick="showPage('dashboard', this)">
-                        <i class="fas fa-fire"></i> Dashboard
-                    </a>
-                    <a href="#" class="nav-item" onclick="showPage('analytics', this)">
-                        <i class="fas fa-chart-line"></i> Analytics
-                    </a>
+                    <a href="#" class="nav-item active" data-page="dashboard">&#x25A6; Dashboard</a>
                 </div>
-
-                <div class="nav-section">
-                    <div class="nav-section-title">Management</div>
-                    <a href="#" class="nav-item" onclick="showPage('users', this)">
-                        <i class="fas fa-users"></i> Users & RBAC
-                        <span class="nav-badge">7</span>
-                    </a>
-                    <a href="#" class="nav-item" onclick="showPage('api', this)">
-                        <i class="fas fa-code"></i> API Explorer
-                        <span class="nav-badge">86+</span>
-                    </a>
-                    <a href="#" class="nav-item" onclick="showPage('activity', this)">
-                        <i class="fas fa-history"></i> Activity Log
-                    </a>
-                </div>
-
-                <div class="nav-section">
-                    <div class="nav-section-title">Marketplace</div>
-                    <a href="#" class="nav-item" onclick="showPage('modules', this)">
-                        <i class="fas fa-puzzle-piece"></i> Marketplace
-                        <span class="nav-badge">6</span>
-                    </a>
-                </div>
-
                 <div class="nav-section">
                     <div class="nav-section-title">Modules</div>
-                    <a href="#" class="nav-item" onclick="showPage('inventory', this)">
-                        <i class="fas fa-boxes"></i> Inventory
-                    </a>
-                    <a href="#" class="nav-item" onclick="showPage('maintenance', this)">
-                        <i class="fas fa-wrench"></i> Maintenance
-                    </a>
-                    <a href="#" class="nav-item" onclick="showPage('production', this)">
-                        <i class="fas fa-industry"></i> Production
-                    </a>
-                    <a href="#" class="nav-item" onclick="showPage('chatdemo', this)">
-                        <i class="fas fa-comments"></i> Chat
-                        <span class="nav-badge">3</span>
-                    </a>
-                    <a href="#" class="nav-item" onclick="showPage('schedules', this)">
-                        <i class="fas fa-calendar-alt"></i> Scheduling
-                    </a>
-                    <a href="#" class="nav-item" onclick="showPage('reports', this)">
-                        <i class="fas fa-chart-pie"></i> Reports
-                    </a>
+                    <a href="#" class="nav-item" data-page="cmms">&#x1F527; Maintenance (CMMS)</a>
+                    <a href="#" class="nav-item" data-page="inventory">&#x1F4E6; Inventory</a>
+                    <a href="#" class="nav-item" data-page="production">&#x1F3ED; Production</a>
+                    <a href="#" class="nav-item" data-page="chat">&#x1F4AC; Chat</a>
+                    <a href="#" class="nav-item" data-page="scheduling">&#x1F4C5; Scheduling</a>
+                    <a href="#" class="nav-item" data-page="reports">&#x1F4CA; Reports</a>
                 </div>
-
                 <div class="nav-section">
-                    <div class="nav-section-title">System</div>
-                    <a href="#" class="nav-item" onclick="showPage('cache', this)">
-                        <i class="fas fa-database"></i> Cache Manager
-                    </a>
-                    <a href="#" class="nav-item" onclick="showPage('security', this)">
-                        <i class="fas fa-shield-alt"></i> Security
-                    </a>
-                    <a href="#" class="nav-item" onclick="showPage('settings', this)">
-                        <i class="fas fa-cog"></i> Settings
-                    </a>
+                    <div class="nav-section-title">Administration</div>
+                    <a href="#" class="nav-item" data-page="users">&#x1F465; Users &amp; RBAC</a>
+                    <a href="#" class="nav-item" data-page="settings">&#x2699; Settings</a>
                 </div>
             </nav>
-
             <div class="sidebar-footer">
                 <div class="sidebar-user">
-                    <div class="user-avatar">CC</div>
+                    <div class="user-avatar">A</div>
                     <div class="user-info">
-                        <div class="name">Chris Carpenter</div>
+                        <div class="name">admin</div>
                         <div class="role">SuperAdmin</div>
                     </div>
-                    <a href="login.html" style="color:var(--text-muted);"><i class="fas fa-sign-out-alt"></i></a>
                 </div>
+                <a href="login.html" class="nav-item" style="margin-top:8px;color:var(--danger)">&#x2192; Sign Out</a>
             </div>
         </aside>
 
-        <!-- Main Content -->
         <main class="main-content">
             <div class="topbar">
-                <div style="display:flex;align-items:center;gap:12px;">
-                    <button class="mobile-menu-toggle" onclick="toggleMobileMenu()"><i class="fas fa-bars"></i></button>
+                <div style="display:flex;align-items:center;gap:12px">
+                    <button class="mobile-menu-toggle" onclick="document.getElementById('sidebar').classList.toggle('open');document.getElementById('overlay').classList.toggle('active')">&#9776;</button>
                     <h2 id="pageTitle">Dashboard</h2>
                 </div>
                 <div class="topbar-actions">
-                    <span style="color:var(--success); font-size:13px;"><i class="fas fa-circle" style="font-size:8px;"></i> System Online</span>
-                    <a href="https://cdacprogramming.gumroad.com/l/phoenix-php" target="_blank" class="btn btn-sm btn-primary" style="text-decoration:none;"><i class="fas fa-shopping-cart"></i> Buy $40</a>
-                    <a href="https://cdacprogramming.gumroad.com/l/Phoenix-PHP-Bundle" target="_blank" class="btn btn-sm btn-outline" style="text-decoration:none;border-color:var(--accent);color:var(--accent);"><i class="fas fa-fire"></i> Bundle $99</a>
-                    
-                    
+                    <button onclick="toggleTheme()" class="btn btn-sm btn-outline" title="Toggle theme" style="font-size:18px;padding:6px 12px" id="themeBtn">&#x2600;</button>
+                    <span style="font-size:13px;color:var(--text-muted)">admin</span>
                 </div>
             </div>
 
-            <!-- ===== DASHBOARD PAGE ===== -->
+            <!-- DASHBOARD -->
             <div id="page-dashboard" class="content-area page-content">
-                <!-- Stats -->
+                <div style="margin-bottom:32px">
+                    <h1 style="font-size:28px;font-weight:800;margin-bottom:4px">Welcome back, admin</h1>
+                    <p style="color:var(--text-muted);font-size:14px" id="dateDisplay"></p>
+                </div>
                 <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-icon amber"><i class="fas fa-users"></i></div>
-                        <div class="stat-value" id="stat-users">128</div>
-                        <div class="stat-label">Active Users</div>
-                        <div class="stat-change up"><i class="fas fa-arrow-up"></i> 12% this week</div>
+                    <div class="stat-card"><div class="stat-icon amber">&#9879;</div><div class="stat-value">6</div><div class="stat-label">Installed Modules</div><div class="stat-change up">&#x2191; All active</div></div>
+                    <div class="stat-card"><div class="stat-icon blue">&#128100;</div><div class="stat-value">128</div><div class="stat-label">Active Users</div><div class="stat-change up">&#x2191; 12% this week</div></div>
+                    <div class="stat-card"><div class="stat-icon green">&#x2714;</div><div class="stat-value">99.9%</div><div class="stat-label">Uptime</div></div>
+                    <div class="stat-card"><div class="stat-icon red">&#128196;</div><div class="stat-value">86+</div><div class="stat-label">API Endpoints</div></div>
+                </div>
+                <div class="grid-2">
+                    <div class="card">
+                        <div class="card-header"><h3>System Overview</h3></div>
+                        <div class="card-body">
+                            <div class="chart-container"><canvas id="overviewChart"></canvas></div>
+                        </div>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-icon blue"><i class="fas fa-exchange-alt"></i></div>
-                        <div class="stat-value" id="stat-api">24.8K</div>
-                        <div class="stat-label">API Requests (24h)</div>
-                        <div class="stat-change up"><i class="fas fa-arrow-up"></i> 8% vs yesterday</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon green"><i class="fas fa-tachometer-alt"></i></div>
-                        <div class="stat-value">99.9%</div>
-                        <div class="stat-label">Uptime</div>
-                        <div class="stat-change up"><i class="fas fa-check"></i> All systems go</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon red"><i class="fas fa-bolt"></i></div>
-                        <div class="stat-value">48ms</div>
-                        <div class="stat-label">Avg Response Time</div>
-                        <div class="stat-change up"><i class="fas fa-arrow-down"></i> 15% faster</div>
+                    <div class="card">
+                        <div class="card-header"><h3>Installed Modules</h3></div>
+                        <div class="card-body">
+                            <div class="status-row"><span class="status-label"><span class="status-indicator online"></span>CMMS — Maintenance</span><span class="status-value">v1.0.0</span></div>
+                            <div class="status-row"><span class="status-label"><span class="status-indicator online"></span>Inventory Management</span><span class="status-value">v1.0.0</span></div>
+                            <div class="status-row"><span class="status-label"><span class="status-indicator online"></span>Production Tracker</span><span class="status-value">v1.0.0</span></div>
+                            <div class="status-row"><span class="status-label"><span class="status-indicator online"></span>Chat System</span><span class="status-value">v1.0.0</span></div>
+                            <div class="status-row"><span class="status-label"><span class="status-indicator online"></span>Scheduling</span><span class="status-value">v1.0.0</span></div>
+                            <div class="status-row"><span class="status-label"><span class="status-indicator online"></span>Reporting</span><span class="status-value">v1.0.0</span></div>
+                        </div>
                     </div>
                 </div>
+            </div>
 
+            <!-- CMMS -->
+            <div id="page-cmms" class="content-area page-content" style="display:none">
+                <div class="stats-grid">
+                    <div class="stat-card"><div class="stat-icon red">&#x1F6A8;</div><div class="stat-value">12</div><div class="stat-label">Open Work Orders</div></div>
+                    <div class="stat-card"><div class="stat-icon amber">&#x23F0;</div><div class="stat-value">3</div><div class="stat-label">Overdue PMs</div></div>
+                    <div class="stat-card"><div class="stat-icon blue">&#x2699;</div><div class="stat-value">47</div><div class="stat-label">Equipment Assets</div></div>
+                    <div class="stat-card"><div class="stat-icon green">&#x2714;</div><div class="stat-value">89</div><div class="stat-label">Completed This Month</div></div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3>Recent Work Orders</h3><button class="btn btn-sm btn-primary">+ New Work Order</button></div>
+                    <div class="card-body"><div class="table-wrapper"><table class="phoenix-table"><thead><tr><th>WO#</th><th>Title</th><th>Priority</th><th>Status</th><th>Assigned To</th><th>Due</th></tr></thead><tbody>
+                        <tr><td>WO-2026-0042</td><td>Bearing replacement — Line 3</td><td><span class="badge badge-danger">High</span></td><td><span class="badge badge-warning">In Progress</span></td><td>Mike T.</td><td>May 23</td></tr>
+                        <tr><td>WO-2026-0041</td><td>Hydraulic leak — Press #2</td><td><span class="badge badge-danger">Emergency</span></td><td><span class="badge badge-info">Open</span></td><td>Unassigned</td><td>May 22</td></tr>
+                        <tr><td>WO-2026-0040</td><td>Motor calibration — Winder 5</td><td><span class="badge badge-info">Medium</span></td><td><span class="badge badge-success">Completed</span></td><td>Sarah K.</td><td>May 20</td></tr>
+                        <tr><td>WO-2026-0039</td><td>PM: Monthly lubrication — All lines</td><td><span class="badge badge-info">Medium</span></td><td><span class="badge badge-warning">In Progress</span></td><td>Team A</td><td>May 25</td></tr>
+                        <tr><td>WO-2026-0038</td><td>Sensor replacement — Quality station</td><td><span class="badge badge-warning">Low</span></td><td><span class="badge badge-success">Completed</span></td><td>Dave R.</td><td>May 18</td></tr>
+                    </tbody></table></div></div>
+                </div>
+            </div>
+
+            <!-- INVENTORY -->
+            <div id="page-inventory" class="content-area page-content" style="display:none">
+                <div class="stats-grid">
+                    <div class="stat-card"><div class="stat-icon blue">&#x1F4E6;</div><div class="stat-value">1,247</div><div class="stat-label">Total Items</div></div>
+                    <div class="stat-card"><div class="stat-icon red">&#x26A0;</div><div class="stat-value">18</div><div class="stat-label">Low Stock Alerts</div></div>
+                    <div class="stat-card"><div class="stat-icon green">&#x1F4B0;</div><div class="stat-value">$284K</div><div class="stat-label">Total Value</div></div>
+                    <div class="stat-card"><div class="stat-icon amber">&#x1F69A;</div><div class="stat-value">5</div><div class="stat-label">Pending POs</div></div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3>Inventory Items</h3><button class="btn btn-sm btn-primary">+ Add Item</button></div>
+                    <div class="card-body"><div class="table-wrapper"><table class="phoenix-table"><thead><tr><th>SKU</th><th>Name</th><th>Category</th><th>Qty</th><th>Reorder Point</th><th>Cost</th></tr></thead><tbody>
+                        <tr><td>BRG-6205-2RS</td><td>Ball Bearing 6205</td><td>Bearings</td><td style="color:var(--danger);font-weight:600">2</td><td>10</td><td>$12.50</td></tr>
+                        <tr><td>FLT-HYD-10</td><td>Hydraulic Filter 10µm</td><td>Filters</td><td>45</td><td>20</td><td>$8.75</td></tr>
+                        <tr><td>BLT-V-A68</td><td>V-Belt A68</td><td>Belts</td><td>12</td><td>8</td><td>$15.20</td></tr>
+                        <tr><td>GRS-NLGI2-1KG</td><td>Grease NLGI-2 (1kg)</td><td>Lubricants</td><td>30</td><td>15</td><td>$22.00</td></tr>
+                    </tbody></table></div></div>
+                </div>
+            </div>
+
+            <!-- PRODUCTION -->
+            <div id="page-production" class="content-area page-content" style="display:none">
+                <div class="stats-grid">
+                    <div class="stat-card"><div class="stat-icon green">&#x1F3ED;</div><div class="stat-value">4 / 6</div><div class="stat-label">Active Lines</div></div>
+                    <div class="stat-card"><div class="stat-icon blue">&#x1F4E6;</div><div class="stat-value">12,480</div><div class="stat-label">Output Today</div></div>
+                    <div class="stat-card"><div class="stat-icon amber">&#x1F4CA;</div><div class="stat-value">87.3%</div><div class="stat-label">OEE</div></div>
+                    <div class="stat-card"><div class="stat-icon red">&#x23F8;</div><div class="stat-value">42m</div><div class="stat-label">Downtime Today</div></div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3>Production Lines</h3></div>
+                    <div class="card-body">
+                        <div class="status-row"><span class="status-label"><span class="status-indicator online"></span>Line 1 — UD Machine</span><span class="badge badge-success">Running</span></div>
+                        <div class="status-row"><span class="status-label"><span class="status-indicator online"></span>Line 2 — Meyer</span><span class="badge badge-success">Running</span></div>
+                        <div class="status-row"><span class="status-label"><span class="status-indicator warning"></span>Line 3 — Crossply</span><span class="badge badge-warning">Maintenance</span></div>
+                        <div class="status-row"><span class="status-label"><span class="status-indicator online"></span>Line 4 — DBP</span><span class="badge badge-success">Running</span></div>
+                        <div class="status-row"><span class="status-label"><span class="status-indicator offline"></span>Line 5 — Drawline</span><span class="badge badge-danger">Down</span></div>
+                        <div class="status-row"><span class="status-label"><span class="status-indicator online"></span>Line 6 — UD-2</span><span class="badge badge-success">Running</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CHAT -->
+            <div id="page-chat" class="content-area page-content" style="display:none">
                 <div class="grid-3">
-                    <!-- Chart -->
                     <div class="card">
-                        <div class="card-header">
-                            <h3><i class="fas fa-chart-area" style="color:var(--accent);margin-right:8px;"></i> API Traffic (7 Days)</h3>
-                            <div>
-                                <button class="btn btn-sm btn-outline" onclick="updateChart('week')">Week</button>
-                                <button class="btn btn-sm btn-outline" onclick="updateChart('month')">Month</button>
-                            </div>
+                        <div class="card-header"><h3># general</h3></div>
+                        <div class="card-body" style="min-height:300px">
+                            <div style="margin-bottom:16px"><strong style="color:var(--accent)">sarah.k</strong> <span style="color:var(--text-muted);font-size:11px">10:42 AM</span><br><span style="color:var(--text-secondary);font-size:14px">Line 3 bearing swap is done. Back online in 20 min.</span></div>
+                            <div style="margin-bottom:16px"><strong style="color:var(--info)">mike.t</strong> <span style="color:var(--text-muted);font-size:11px">10:38 AM</span><br><span style="color:var(--text-secondary);font-size:14px">Confirmed. Parts are staged at the machine.</span></div>
+                            <div style="margin-bottom:16px"><strong style="color:var(--success)">admin</strong> <span style="color:var(--text-muted);font-size:11px">10:35 AM</span><br><span style="color:var(--text-secondary);font-size:14px">@mike.t can you verify the PM checklist for Line 3?</span></div>
+                            <div style="margin-bottom:16px"><strong style="color:var(--warning)">dave.r</strong> <span style="color:var(--text-muted);font-size:11px">10:20 AM</span><br><span style="color:var(--text-secondary);font-size:14px">Quality station sensor swap completed. All readings nominal.</span></div>
                         </div>
-                        <div class="card-body">
-                            <div class="chart-container">
-                                <canvas id="trafficChart"></canvas>
-                            </div>
+                        <div style="padding:16px;border-top:1px solid var(--border);display:flex;gap:8px">
+                            <input type="text" class="form-control" placeholder="Type a message..." style="flex:1">
+                            <button class="btn btn-primary" style="width:auto">Send</button>
                         </div>
                     </div>
-
-                    <!-- Activity Feed -->
                     <div class="card">
-                        <div class="card-header">
-                            <h3><i class="fas fa-stream" style="color:var(--info);margin-right:8px;"></i> Live Activity</h3>
-                        </div>
+                        <div class="card-header"><h3>Channels</h3></div>
                         <div class="card-body">
-                            <ul class="activity-feed" id="activityFeed">
-                                <li class="activity-item">
-                                    <span class="activity-dot green"></span>
-                                    <div>
-                                        <div class="activity-text"><strong>admin@demo.com</strong> logged in successfully</div>
-                                        <div class="activity-time">Just now</div>
-                                    </div>
-                                </li>
-                                <li class="activity-item">
-                                    <span class="activity-dot blue"></span>
-                                    <div>
-                                        <div class="activity-text">API endpoint <strong>/v1/users</strong> called — 200 OK</div>
-                                        <div class="activity-time">2 minutes ago</div>
-                                    </div>
-                                </li>
-                                <li class="activity-item">
-                                    <span class="activity-dot amber"></span>
-                                    <div>
-                                        <div class="activity-text">Cache cleared for <strong>dashboard_stats</strong></div>
-                                        <div class="activity-time">5 minutes ago</div>
-                                    </div>
-                                </li>
-                                <li class="activity-item">
-                                    <span class="activity-dot red"></span>
-                                    <div>
-                                        <div class="activity-text">Rate limit triggered for IP <strong>203.0.113.42</strong></div>
-                                        <div class="activity-time">12 minutes ago</div>
-                                    </div>
-                                </li>
-                                <li class="activity-item">
-                                    <span class="activity-dot green"></span>
-                                    <div>
-                                        <div class="activity-text">User <strong>jsmith</strong> permissions updated to <strong>Supervisor</strong></div>
-                                        <div class="activity-time">18 minutes ago</div>
-                                    </div>
-                                </li>
-                                <li class="activity-item">
-                                    <span class="activity-dot blue"></span>
-                                    <div>
-                                        <div class="activity-text">Database backup completed — <strong>0 errors</strong></div>
-                                        <div class="activity-time">1 hour ago</div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- System Status + DB Connections -->
-                <div class="grid-2">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3><i class="fas fa-heartbeat" style="color:var(--success);margin-right:8px;"></i> System Status</h3>
-                        </div>
-                        <div class="card-body">
-                            <div class="status-row">
-                                <span class="status-label"><span class="status-indicator online"></span> Apache Web Server</span>
-                                <span class="status-value">Running — 14d 6h uptime</span>
-                            </div>
-                            <div class="status-row">
-                                <span class="status-label"><span class="status-indicator online"></span> MySQL Primary</span>
-                                <span class="status-value">Connected — 4ms latency</span>
-                            </div>
-                            <div class="status-row">
-                                <span class="status-label"><span class="status-indicator online"></span> MySQL Replica</span>
-                                <span class="status-value">Synced — 0 lag</span>
-                            </div>
-                            <div class="status-row">
-                                <span class="status-label"><span class="status-indicator online"></span> Redis Cache</span>
-                                <span class="status-value">94% hit rate — 2.4GB used</span>
-                            </div>
-                            <div class="status-row">
-                                <span class="status-label"><span class="status-indicator online"></span> CSRF Protection</span>
-                                <span class="status-value">Active — tokens rotating</span>
-                            </div>
-                            <div class="status-row">
-                                <span class="status-label"><span class="status-indicator warning"></span> Rate Limiter</span>
-                                <span class="status-value">3 IPs throttled (last hour)</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-header">
-                            <h3><i class="fas fa-server" style="color:var(--accent);margin-right:8px;"></i> Database Connections</h3>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-wrapper">
-                                <table class="phoenix-table">
-                                    <thead>
-                                        <tr>
-                                            <th>Connection</th>
-                                            <th>Status</th>
-                                            <th>Queries</th>
-                                            <th>Latency</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td><strong>primary</strong></td>
-                                            <td><span class="badge badge-success">Online</span></td>
-                                            <td>1,247</td>
-                                            <td>4ms</td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>users</strong></td>
-                                            <td><span class="badge badge-success">Online</span></td>
-                                            <td>892</td>
-                                            <td>3ms</td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>analytics</strong></td>
-                                            <td><span class="badge badge-success">Online</span></td>
-                                            <td>3,441</td>
-                                            <td>7ms</td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>module_1</strong></td>
-                                            <td><span class="badge badge-success">Online</span></td>
-                                            <td>567</td>
-                                            <td>5ms</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                            <div style="padding:8px 12px;border-radius:var(--radius-sm);background:var(--accent-glow);color:var(--accent);margin-bottom:4px;cursor:pointer"># general</div>
+                            <div style="padding:8px 12px;color:var(--text-secondary);margin-bottom:4px;cursor:pointer"># maintenance</div>
+                            <div style="padding:8px 12px;color:var(--text-secondary);margin-bottom:4px;cursor:pointer"># production</div>
+                            <div style="padding:8px 12px;color:var(--text-secondary);margin-bottom:4px;cursor:pointer"># quality</div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- ===== USERS PAGE ===== -->
-            <div id="page-users" class="content-area page-content" style="display:none;">
-                <div class="card">
-                    <div class="card-header">
-                        <h3><i class="fas fa-users" style="color:var(--accent);margin-right:8px;"></i> Users & Permission Groups (RBAC)</h3>
-                        <button class="btn btn-sm btn-primary"><i class="fas fa-plus"></i> Add User</button>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-wrapper">
-                            <table class="phoenix-table">
-                                <thead>
-                                    <tr><th>User</th><th>Email</th><th>Role</th><th>Status</th><th>Last Login</th><th>Actions</th></tr>
-                                </thead>
-                                <tbody>
-                                    <tr><td><strong>Chris Carpenter</strong></td><td>admin@phoenix.dev</td><td><span class="badge badge-warning">SuperAdmin</span></td><td><span class="badge badge-success">Active</span></td><td>Just now</td><td><button class="btn btn-sm btn-outline">Edit</button></td></tr>
-                                    <tr><td><strong>Jane Smith</strong></td><td>jane@phoenix.dev</td><td><span class="badge badge-info">Admin</span></td><td><span class="badge badge-success">Active</span></td><td>10 min ago</td><td><button class="btn btn-sm btn-outline">Edit</button></td></tr>
-                                    <tr><td><strong>Mike Johnson</strong></td><td>mike@phoenix.dev</td><td><span class="badge badge-info">Supervisor</span></td><td><span class="badge badge-success">Active</span></td><td>1 hour ago</td><td><button class="btn btn-sm btn-outline">Edit</button></td></tr>
-                                    <tr><td><strong>Sarah Davis</strong></td><td>sarah@phoenix.dev</td><td><span class="badge badge-success">Operator</span></td><td><span class="badge badge-success">Active</span></td><td>3 hours ago</td><td><button class="btn btn-sm btn-outline">Edit</button></td></tr>
-                                    <tr><td><strong>Tom Wilson</strong></td><td>tom@phoenix.dev</td><td><span class="badge badge-success">Inspector</span></td><td><span class="badge badge-danger">Locked</span></td><td>2 days ago</td><td><button class="btn btn-sm btn-outline">Edit</button></td></tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header"><h3><i class="fas fa-key" style="color:var(--info);margin-right:8px;"></i> Permission Groups</h3></div>
-                    <div class="card-body">
-                        <div class="table-wrapper">
-                            <table class="phoenix-table">
-                                <thead><tr><th>Group</th><th>Read</th><th>Write</th><th>Delete</th><th>Admin</th><th>Members</th></tr></thead>
-                                <tbody>
-                                    <tr><td><strong>SuperAdmin</strong></td><td><i class="fas fa-check" style="color:var(--success)"></i></td><td><i class="fas fa-check" style="color:var(--success)"></i></td><td><i class="fas fa-check" style="color:var(--success)"></i></td><td><i class="fas fa-check" style="color:var(--success)"></i></td><td>2</td></tr>
-                                    <tr><td><strong>Admin</strong></td><td><i class="fas fa-check" style="color:var(--success)"></i></td><td><i class="fas fa-check" style="color:var(--success)"></i></td><td><i class="fas fa-check" style="color:var(--success)"></i></td><td><i class="fas fa-times" style="color:var(--danger)"></i></td><td>3</td></tr>
-                                    <tr><td><strong>Supervisor</strong></td><td><i class="fas fa-check" style="color:var(--success)"></i></td><td><i class="fas fa-check" style="color:var(--success)"></i></td><td><i class="fas fa-times" style="color:var(--danger)"></i></td><td><i class="fas fa-times" style="color:var(--danger)"></i></td><td>8</td></tr>
-                                    <tr><td><strong>Operator</strong></td><td><i class="fas fa-check" style="color:var(--success)"></i></td><td><i class="fas fa-check" style="color:var(--success)"></i></td><td><i class="fas fa-times" style="color:var(--danger)"></i></td><td><i class="fas fa-times" style="color:var(--danger)"></i></td><td>45</td></tr>
-                                    <tr><td><strong>Inspector</strong></td><td><i class="fas fa-check" style="color:var(--success)"></i></td><td><i class="fas fa-check" style="color:var(--success)"></i></td><td><i class="fas fa-times" style="color:var(--danger)"></i></td><td><i class="fas fa-times" style="color:var(--danger)"></i></td><td>12</td></tr>
-                                    <tr><td><strong>Viewer</strong></td><td><i class="fas fa-check" style="color:var(--success)"></i></td><td><i class="fas fa-times" style="color:var(--danger)"></i></td><td><i class="fas fa-times" style="color:var(--danger)"></i></td><td><i class="fas fa-times" style="color:var(--danger)"></i></td><td>58</td></tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ===== API EXPLORER PAGE ===== -->
-            <div id="page-api" class="content-area page-content" style="display:none;">
-                <div class="card">
-                    <div class="card-header">
-                        <h3><i class="fas fa-code" style="color:var(--accent);margin-right:8px;"></i> REST API Explorer — 86+ Endpoints</h3>
-                        <button class="btn btn-sm btn-info" onclick="alert('Swagger UI launches at /api/docs when running on a live server. This demo shows the endpoint structure.')"><i class="fas fa-external-link-alt"></i> Swagger UI</button>
-                    </div>
-                    <div class="card-body">
-                        <div class="code-block">
-<span class="comment">// PhoenixPHP API — Standardized Response Format</span>
-<span class="keyword">GET</span> /api/v1/users
-
-<span class="comment">// Success Response</span>
-{
-    <span class="string">"ok"</span>: <span class="keyword">true</span>,
-    <span class="string">"data"</span>: {
-        <span class="string">"users"</span>: [...],
-        <span class="string">"pagination"</span>: {
-            <span class="string">"page"</span>: <span class="var">1</span>,
-            <span class="string">"per_page"</span>: <span class="var">20</span>,
-            <span class="string">"total"</span>: <span class="var">128</span>
-        }
-    }
-}
-
-<span class="comment">// Error Response</span>
-{
-    <span class="string">"ok"</span>: <span class="keyword">false</span>,
-    <span class="string">"error"</span>: <span class="string">"Unauthorized"</span>,
-    <span class="string">"code"</span>: <span class="var">401</span>
-}
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header"><h3>Available Endpoints</h3></div>
-                    <div class="card-body">
-                        <div class="table-wrapper">
-                            <table class="phoenix-table">
-                                <thead><tr><th>Method</th><th>Endpoint</th><th>Auth</th><th>Description</th></tr></thead>
-                                <tbody>
-                                    <tr><td><span class="badge badge-success">GET</span></td><td><code>/api/v1/users</code></td><td><i class="fas fa-lock" style="color:var(--accent)"></i></td><td>List all users (paginated)</td></tr>
-                                    <tr><td><span class="badge badge-info">POST</span></td><td><code>/api/v1/users</code></td><td><i class="fas fa-lock" style="color:var(--accent)"></i></td><td>Create new user</td></tr>
-                                    <tr><td><span class="badge badge-success">GET</span></td><td><code>/api/v1/users/{id}</code></td><td><i class="fas fa-lock" style="color:var(--accent)"></i></td><td>Get user by ID</td></tr>
-                                    <tr><td><span class="badge badge-warning">PUT</span></td><td><code>/api/v1/users/{id}</code></td><td><i class="fas fa-lock" style="color:var(--accent)"></i></td><td>Update user</td></tr>
-                                    <tr><td><span class="badge badge-danger">DELETE</span></td><td><code>/api/v1/users/{id}</code></td><td><i class="fas fa-lock" style="color:var(--accent)"></i></td><td>Delete user</td></tr>
-                                    <tr><td><span class="badge badge-success">GET</span></td><td><code>/api/v1/modules</code></td><td><i class="fas fa-lock" style="color:var(--accent)"></i></td><td>List all modules</td></tr>
-                                    <tr><td><span class="badge badge-success">GET</span></td><td><code>/api/v1/modules/{type}/{id}</code></td><td><i class="fas fa-lock" style="color:var(--accent)"></i></td><td>Get module data</td></tr>
-                                    <tr><td><span class="badge badge-success">GET</span></td><td><code>/api/v1/cache/stats</code></td><td><i class="fas fa-lock" style="color:var(--accent)"></i></td><td>Cache hit/miss statistics</td></tr>
-                                    <tr><td><span class="badge badge-info">POST</span></td><td><code>/api/v1/auth/login</code></td><td><i class="fas fa-unlock" style="color:var(--text-muted)"></i></td><td>Authenticate user</td></tr>
-                                    <tr><td><span class="badge badge-info">POST</span></td><td><code>/api/v1/auth/logout</code></td><td><i class="fas fa-lock" style="color:var(--accent)"></i></td><td>End session</td></tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ===== ACTIVITY LOG PAGE ===== -->
-            <div id="page-activity" class="content-area page-content" style="display:none;">
-                <div class="card">
-                    <div class="card-header">
-                        <h3><i class="fas fa-history" style="color:var(--accent);margin-right:8px;"></i> Audit Trail — Field-Level Change Tracking</h3>
-                        <button class="btn btn-sm btn-outline"><i class="fas fa-download"></i> Export</button>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-wrapper">
-                            <table class="phoenix-table">
-                                <thead><tr><th>Timestamp</th><th>User</th><th>Action</th><th>Field</th><th>Old Value</th><th>New Value</th><th>IP</th></tr></thead>
-                                <tbody>
-                                    <tr><td>2026-04-08 14:22:01</td><td>admin</td><td><span class="badge badge-info">UPDATE</span></td><td>user.role</td><td>Operator</td><td>Supervisor</td><td>192.168.1.10</td></tr>
-                                    <tr><td>2026-04-08 14:18:33</td><td>jsmith</td><td><span class="badge badge-success">CREATE</span></td><td>record.new</td><td>—</td><td>Order #4521</td><td>192.168.1.25</td></tr>
-                                    <tr><td>2026-04-08 14:15:07</td><td>admin</td><td><span class="badge badge-warning">CONFIG</span></td><td>cache.ttl</td><td>300</td><td>600</td><td>192.168.1.10</td></tr>
-                                    <tr><td>2026-04-08 14:10:44</td><td>sdavis</td><td><span class="badge badge-info">UPDATE</span></td><td>order.status</td><td>Pending</td><td>Shipped</td><td>192.168.1.31</td></tr>
-                                    <tr><td>2026-04-08 14:05:12</td><td>system</td><td><span class="badge badge-success">BACKUP</span></td><td>database</td><td>—</td><td>Completed (0 errors)</td><td>127.0.0.1</td></tr>
-                                    <tr><td>2026-04-08 13:58:29</td><td>twilson</td><td><span class="badge badge-danger">BLOCKED</span></td><td>auth.login</td><td>—</td><td>Rate limit exceeded</td><td>203.0.113.42</td></tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ===== SECURITY PAGE ===== -->
-            <div id="page-security" class="content-area page-content" style="display:none;">
+            <!-- SCHEDULING -->
+            <div id="page-scheduling" class="content-area page-content" style="display:none">
                 <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-icon green"><i class="fas fa-shield-alt"></i></div>
-                        <div class="stat-value">A+</div>
-                        <div class="stat-label">Security Score</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon amber"><i class="fas fa-key"></i></div>
-                        <div class="stat-value">847</div>
-                        <div class="stat-label">CSRF Tokens Generated (24h)</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon red"><i class="fas fa-ban"></i></div>
-                        <div class="stat-value">23</div>
-                        <div class="stat-label">Blocked Requests (24h)</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon blue"><i class="fas fa-fingerprint"></i></div>
-                        <div class="stat-value">7</div>
-                        <div class="stat-label">RBAC Groups Active</div>
-                    </div>
-                </div>
-
-                <div class="grid-2">
-                    <div class="card">
-                        <div class="card-header"><h3><i class="fas fa-lock" style="color:var(--success);margin-right:8px;"></i> Security Features</h3></div>
-                        <div class="card-body">
-                            <div class="status-row"><span class="status-label"><span class="status-indicator online"></span> CSRF Protection</span><span class="status-value">Enabled — 1hr token rotation</span></div>
-                            <div class="status-row"><span class="status-label"><span class="status-indicator online"></span> SQL Injection Prevention</span><span class="status-value">Prepared statements enforced</span></div>
-                            <div class="status-row"><span class="status-label"><span class="status-indicator online"></span> Rate Limiting</span><span class="status-value">5 login / 100 API per hour</span></div>
-                            <div class="status-row"><span class="status-label"><span class="status-indicator online"></span> Input Sanitization</span><span class="status-value">All entry points covered</span></div>
-                            <div class="status-row"><span class="status-label"><span class="status-indicator online"></span> SSL/TLS</span><span class="status-value">Certificate valid — 287 days</span></div>
-                            <div class="status-row"><span class="status-label"><span class="status-indicator online"></span> Audit Logging</span><span class="status-value">Field-level tracking active</span></div>
-                            <div class="status-row"><span class="status-label"><span class="status-indicator online"></span> Session Security</span><span class="status-value">HTTPOnly, Secure, SameSite</span></div>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-header"><h3><i class="fas fa-code" style="color:var(--info);margin-right:8px;"></i> Quick Integration</h3></div>
-                        <div class="card-body">
-                            <div class="code-block">
-<span class="comment">// Authentication check</span>
-<span class="keyword">if</span> (<span class="func">Auth</span>::<span class="func">check</span>()) {
-    $user = <span class="func">Auth</span>::<span class="func">user</span>();
-}
-
-<span class="comment">// Permission gate</span>
-<span class="keyword">if</span> (<span class="func">Auth</span>::<span class="func">can</span>(<span class="string">'admin.write'</span>)) {
-    <span class="comment">// authorized action</span>
-}
-
-<span class="comment">// CSRF in forms</span>
-&lt;form method=<span class="string">"POST"</span>&gt;
-    &lt;?= <span class="func">CSRF</span>::<span class="func">field</span>() ?&gt;
-&lt;/form&gt;
-
-<span class="comment">// Input validation</span>
-$v = <span class="func">Validator</span>::<span class="func">make</span>($data, [
-    <span class="string">'email'</span> => <span class="string">'required|email'</span>,
-    <span class="string">'name'</span>  => <span class="string">'required|min:2'</span>,
-]);
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Hidden pages (cache, analytics, settings) show same pattern -->
-            <div id="page-cache" class="content-area page-content" style="display:none;">
-                <div class="stats-grid">
-                    <div class="stat-card"><div class="stat-icon green"><i class="fas fa-bullseye"></i></div><div class="stat-value">94.2%</div><div class="stat-label">Cache Hit Rate</div></div>
-                    <div class="stat-card"><div class="stat-icon blue"><i class="fas fa-memory"></i></div><div class="stat-value">2.4 GB</div><div class="stat-label">Cache Size</div></div>
-                    <div class="stat-card"><div class="stat-icon amber"><i class="fas fa-layer-group"></i></div><div class="stat-value">Redis</div><div class="stat-label">Active Driver</div></div>
-                    <div class="stat-card"><div class="stat-icon red"><i class="fas fa-clock"></i></div><div class="stat-value">5 min</div><div class="stat-label">Default TTL</div></div>
+                    <div class="stat-card"><div class="stat-icon blue">&#x1F4C5;</div><div class="stat-value">3</div><div class="stat-label">Shift Types</div></div>
+                    <div class="stat-card"><div class="stat-icon green">&#x1F3E2;</div><div class="stat-value">4</div><div class="stat-label">Departments</div></div>
+                    <div class="stat-card"><div class="stat-icon amber">&#x1F3D6;</div><div class="stat-value">2</div><div class="stat-label">Pending Time Off</div></div>
+                    <div class="stat-card"><div class="stat-icon red">&#x1F504;</div><div class="stat-value">1</div><div class="stat-label">Swap Requests</div></div>
                 </div>
                 <div class="card">
-                    <div class="card-header"><h3><i class="fas fa-database" style="color:var(--accent);margin-right:8px;"></i> Cache Operations</h3><button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Flush All</button></div>
-                    <div class="card-body">
-                        <div class="code-block">
-<span class="comment">// Cache with automatic fallback (Redis → APCu → File)</span>
-$stats = <span class="func">Cache</span>::<span class="func">remember</span>(<span class="string">'dashboard_stats'</span>, <span class="var">300</span>, <span class="keyword">function</span>() {
-    <span class="keyword">return</span> <span class="func">db</span>()-><span class="func">query</span>(<span class="string">"SELECT COUNT(*) FROM users"</span>);
-});
-
-<span class="comment">// Query-level caching with tag invalidation</span>
-$users = <span class="func">QueryCache</span>::<span class="func">query</span>($pdo, <span class="string">"SELECT * FROM users WHERE active = 1"</span>, [], <span class="var">600</span>);
-<span class="func">QueryCache</span>::<span class="func">invalidate</span>(<span class="string">'users'</span>); <span class="comment">// Clear by tag</span>
-                        </div>
-                    </div>
+                    <div class="card-header"><h3>This Week's Schedule</h3></div>
+                    <div class="card-body"><div class="table-wrapper"><table class="phoenix-table"><thead><tr><th>Employee</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th></tr></thead><tbody>
+                        <tr><td>Mike T.</td><td><span class="badge badge-info">1st</span></td><td><span class="badge badge-info">1st</span></td><td><span class="badge badge-info">1st</span></td><td><span class="badge badge-info">1st</span></td><td><span class="badge badge-info">1st</span></td></tr>
+                        <tr><td>Sarah K.</td><td><span class="badge badge-warning">2nd</span></td><td><span class="badge badge-warning">2nd</span></td><td><span class="badge badge-warning">2nd</span></td><td>—</td><td>—</td></tr>
+                        <tr><td>Dave R.</td><td><span class="badge badge-danger">3rd</span></td><td><span class="badge badge-danger">3rd</span></td><td><span class="badge badge-danger">3rd</span></td><td><span class="badge badge-danger">3rd</span></td><td><span class="badge badge-danger">3rd</span></td></tr>
+                    </tbody></table></div></div>
                 </div>
             </div>
 
-            <div id="page-analytics" class="content-area page-content" style="display:none;">
-                <div class="stats-grid">
-                    <div class="stat-card"><div class="stat-icon amber"><i class="fas fa-chart-bar"></i></div><div class="stat-value">3.2M</div><div class="stat-label">Total Requests (30d)</div></div>
-                    <div class="stat-card"><div class="stat-icon green"><i class="fas fa-check-circle"></i></div><div class="stat-value">99.7%</div><div class="stat-label">Success Rate</div></div>
-                    <div class="stat-card"><div class="stat-icon blue"><i class="fas fa-database"></i></div><div class="stat-value">48ms</div><div class="stat-label">Avg Query Time</div></div>
-                    <div class="stat-card"><div class="stat-icon red"><i class="fas fa-exclamation-triangle"></i></div><div class="stat-value">12</div><div class="stat-label">Slow Queries Detected</div></div>
-                </div>
-                <div class="card"><div class="card-header"><h3><i class="fas fa-chart-line" style="color:var(--accent);margin-right:8px;"></i> Performance Trends</h3></div><div class="card-body"><div class="chart-container"><canvas id="perfChart"></canvas></div></div></div>
-            </div>
-
-            <!-- ===== MODULES MARKETPLACE PAGE ===== -->
-            <!-- ===== INVENTORY MODULE DEMO ===== -->
-            <div id="page-inventory" class="content-area page-content" style="display:none;">
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-icon green"><i class="fas fa-boxes"></i></div>
-                        <div class="stat-value">1,247</div>
-                        <div class="stat-label">Total Items</div>
-                        <div class="stat-change up"><i class="fas fa-arrow-up"></i> 24 added this week</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon amber"><i class="fas fa-exclamation-triangle"></i></div>
-                        <div class="stat-value">18</div>
-                        <div class="stat-label">Low Stock Alerts</div>
-                        <div class="stat-change down"><i class="fas fa-arrow-up"></i> 3 new since yesterday</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon blue"><i class="fas fa-truck-loading"></i></div>
-                        <div class="stat-value">42</div>
-                        <div class="stat-label">Pending Receipts</div>
-                        <div class="stat-change up"><i class="fas fa-clock"></i> 6 due today</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon red"><i class="fas fa-dollar-sign"></i></div>
-                        <div class="stat-value">$284K</div>
-                        <div class="stat-label">Inventory Value</div>
-                        <div class="stat-change up"><i class="fas fa-arrow-up"></i> 4.2% vs last month</div>
-                    </div>
-                </div>
-
-                <div class="grid-3">
-                    <!-- Inventory Items Table -->
-                    <div class="card">
-                        <div class="card-header">
-                            <h3><i class="fas fa-list" style="color:var(--accent);margin-right:8px;"></i> Inventory Items</h3>
-                            <div style="display:flex;gap:8px;">
-                                <input class="form-control" placeholder="Search SKU, name..." style="width:200px;padding:8px 12px;font-size:13px;">
-                                <button class="btn btn-sm btn-primary"><i class="fas fa-plus"></i> Add Item</button>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-wrapper">
-                                <table class="phoenix-table">
-                                    <thead>
-                                        <tr><th>SKU</th><th>Item Name</th><th>Category</th><th>Stock</th><th>Reorder Pt</th><th>Status</th><th>Value</th></tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td><code>WDG-4420</code></td>
-                                            <td><strong>Steel Bracket Assembly</strong></td>
-                                            <td>Hardware</td>
-                                            <td>342</td>
-                                            <td>100</td>
-                                            <td><span class="badge badge-success">In Stock</span></td>
-                                            <td>$4,104</td>
-                                        </tr>
-                                        <tr>
-                                            <td><code>ELC-1180</code></td>
-                                            <td><strong>Control Board PCB v3</strong></td>
-                                            <td>Electronics</td>
-                                            <td>28</td>
-                                            <td>50</td>
-                                            <td><span class="badge badge-warning">Low Stock</span></td>
-                                            <td>$3,640</td>
-                                        </tr>
-                                        <tr>
-                                            <td><code>FLT-0095</code></td>
-                                            <td><strong>HEPA Filter Cartridge</strong></td>
-                                            <td>Consumables</td>
-                                            <td>156</td>
-                                            <td>75</td>
-                                            <td><span class="badge badge-success">In Stock</span></td>
-                                            <td>$5,460</td>
-                                        </tr>
-                                        <tr>
-                                            <td><code>BRG-2210</code></td>
-                                            <td><strong>Sealed Bearing 6205-2RS</strong></td>
-                                            <td>Mechanical</td>
-                                            <td>8</td>
-                                            <td>25</td>
-                                            <td><span class="badge badge-danger">Critical</span></td>
-                                            <td>$96</td>
-                                        </tr>
-                                        <tr>
-                                            <td><code>LBL-3300</code></td>
-                                            <td><strong>Thermal Label Roll 4x6</strong></td>
-                                            <td>Packaging</td>
-                                            <td>420</td>
-                                            <td>200</td>
-                                            <td><span class="badge badge-success">In Stock</span></td>
-                                            <td>$1,260</td>
-                                        </tr>
-                                        <tr>
-                                            <td><code>MTR-0550</code></td>
-                                            <td><strong>Stepper Motor NEMA 23</strong></td>
-                                            <td>Electronics</td>
-                                            <td>12</td>
-                                            <td>10</td>
-                                            <td><span class="badge badge-success">In Stock</span></td>
-                                            <td>$540</td>
-                                        </tr>
-                                        <tr>
-                                            <td><code>HSE-0070</code></td>
-                                            <td><strong>Hydraulic Hose 1/2" x 36"</strong></td>
-                                            <td>Mechanical</td>
-                                            <td>3</td>
-                                            <td>15</td>
-                                            <td><span class="badge badge-danger">Critical</span></td>
-                                            <td>$87</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:16px;padding-top:12px;border-top:1px solid var(--border);">
-                                <span style="font-size:12px;color:var(--text-muted);">Showing 1-7 of 1,247 items</span>
-                                <div style="display:flex;gap:4px;">
-                                    <button class="btn btn-sm btn-outline" disabled>&laquo;</button>
-                                    <button class="btn btn-sm btn-primary">1</button>
-                                    <button class="btn btn-sm btn-outline">2</button>
-                                    <button class="btn btn-sm btn-outline">3</button>
-                                    <button class="btn btn-sm btn-outline">...</button>
-                                    <button class="btn btn-sm btn-outline">178</button>
-                                    <button class="btn btn-sm btn-outline">&raquo;</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Recent Activity -->
-                    <div class="card">
-                        <div class="card-header">
-                            <h3><i class="fas fa-exchange-alt" style="color:var(--info);margin-right:8px;"></i> Recent Transactions</h3>
-                        </div>
-                        <div class="card-body">
-                            <ul class="activity-feed">
-                                <li class="activity-item">
-                                    <span class="activity-dot green"></span>
-                                    <div>
-                                        <div class="activity-text"><span class="badge badge-success" style="font-size:10px;margin-right:4px;">RECEIVED</span> <strong>150x</strong> Steel Bracket Assembly</div>
-                                        <div class="activity-time">PO-2026-0442 &bull; 12 min ago</div>
-                                    </div>
-                                </li>
-                                <li class="activity-item">
-                                    <span class="activity-dot blue"></span>
-                                    <div>
-                                        <div class="activity-text"><span class="badge badge-info" style="font-size:10px;margin-right:4px;">SHIPPED</span> <strong>24x</strong> HEPA Filter Cartridge</div>
-                                        <div class="activity-time">REF-88412 &bull; 45 min ago</div>
-                                    </div>
-                                </li>
-                                <li class="activity-item">
-                                    <span class="activity-dot amber"></span>
-                                    <div>
-                                        <div class="activity-text"><span class="badge badge-warning" style="font-size:10px;margin-right:4px;">ADJUSTED</span> <strong>Sealed Bearing 6205-2RS</strong> count corrected -2</div>
-                                        <div class="activity-time">Cycle count &bull; 1 hour ago</div>
-                                    </div>
-                                </li>
-                                <li class="activity-item">
-                                    <span class="activity-dot red"></span>
-                                    <div>
-                                        <div class="activity-text"><span class="badge badge-danger" style="font-size:10px;margin-right:4px;">ALERT</span> <strong>Hydraulic Hose</strong> below reorder point</div>
-                                        <div class="activity-time">Auto-alert &bull; 2 hours ago</div>
-                                    </div>
-                                </li>
-                                <li class="activity-item">
-                                    <span class="activity-dot green"></span>
-                                    <div>
-                                        <div class="activity-text"><span class="badge badge-success" style="font-size:10px;margin-right:4px;">RECEIVED</span> <strong>500x</strong> Thermal Label Roll</div>
-                                        <div class="activity-time">PO-2026-0440 &bull; 3 hours ago</div>
-                                    </div>
-                                </li>
-                                <li class="activity-item">
-                                    <span class="activity-dot blue"></span>
-                                    <div>
-                                        <div class="activity-text"><span class="badge badge-info" style="font-size:10px;margin-right:4px;">TRANSFER</span> <strong>6x</strong> Stepper Motor to Line 3</div>
-                                        <div class="activity-time">WH-01 → LINE-03 &bull; 4 hours ago</div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Purchase Orders + Suppliers -->
-                <div class="grid-2">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3><i class="fas fa-file-invoice" style="color:var(--accent);margin-right:8px;"></i> Open Purchase Orders</h3>
-                            <button class="btn btn-sm btn-primary"><i class="fas fa-plus"></i> New PO</button>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-wrapper">
-                                <table class="phoenix-table">
-                                    <thead><tr><th>PO #</th><th>Supplier</th><th>Items</th><th>Total</th><th>Status</th><th>ETA</th></tr></thead>
-                                    <tbody>
-                                        <tr><td><strong>PO-2026-0445</strong></td><td>Allied Components</td><td>3</td><td>$2,450</td><td><span class="badge badge-info">Submitted</span></td><td>Apr 12</td></tr>
-                                        <tr><td><strong>PO-2026-0443</strong></td><td>FastParts Inc</td><td>5</td><td>$890</td><td><span class="badge badge-warning">Partial</span></td><td>Apr 10</td></tr>
-                                        <tr><td><strong>PO-2026-0441</strong></td><td>National Bearings</td><td>2</td><td>$1,200</td><td><span class="badge badge-info">Submitted</span></td><td>Apr 15</td></tr>
-                                        <tr><td><strong>PO-2026-0438</strong></td><td>Hydraulic Supply Co</td><td>1</td><td>$435</td><td><span class="badge badge-success">Received</span></td><td>Delivered</td></tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-header">
-                            <h3><i class="fas fa-handshake" style="color:var(--success);margin-right:8px;"></i> Top Suppliers</h3>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-wrapper">
-                                <table class="phoenix-table">
-                                    <thead><tr><th>Supplier</th><th>Lead Time</th><th>Open POs</th><th>YTD Spend</th></tr></thead>
-                                    <tbody>
-                                        <tr><td><strong>Allied Components</strong></td><td>5 days</td><td>2</td><td>$42,800</td></tr>
-                                        <tr><td><strong>FastParts Inc</strong></td><td>3 days</td><td>1</td><td>$28,350</td></tr>
-                                        <tr><td><strong>National Bearings</strong></td><td>7 days</td><td>1</td><td>$18,900</td></tr>
-                                        <tr><td><strong>Hydraulic Supply Co</strong></td><td>10 days</td><td>0</td><td>$12,440</td></tr>
-                                        <tr><td><strong>Label Direct</strong></td><td>2 days</td><td>0</td><td>$8,100</td></tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ===== CMMS MAINTENANCE DEMO ===== -->
-            <div id="page-maintenance" class="content-area page-content" style="display:none;">
-                <div class="stats-grid">
-                    <div class="stat-card"><div class="stat-icon red"><i class="fas fa-clipboard-list"></i></div><div class="stat-value">14</div><div class="stat-label">Open Work Orders</div><div class="stat-change down"><i class="fas fa-arrow-up"></i> 3 emergency</div></div>
-                    <div class="stat-card"><div class="stat-icon amber"><i class="fas fa-calendar-check"></i></div><div class="stat-value">7</div><div class="stat-label">Overdue PM Tasks</div><div class="stat-change down"><i class="fas fa-exclamation"></i> Action needed</div></div>
-                    <div class="stat-card"><div class="stat-icon blue"><i class="fas fa-cogs"></i></div><div class="stat-value">42</div><div class="stat-label">Equipment Assets</div><div class="stat-change up"><i class="fas fa-check"></i> 38 operational</div></div>
-                    <div class="stat-card"><div class="stat-icon green"><i class="fas fa-check-circle"></i></div><div class="stat-value">28</div><div class="stat-label">Completed This Month</div><div class="stat-change up"><i class="fas fa-arrow-up"></i> 12% vs last month</div></div>
-                </div>
-                <div class="card"><div class="card-header"><h3><i class="fas fa-clipboard-list" style="color:var(--accent);margin-right:8px;"></i> Active Work Orders</h3><button class="btn btn-sm btn-primary"><i class="fas fa-plus"></i> New Work Order</button></div><div class="card-body"><div class="table-wrapper"><table class="phoenix-table"><thead><tr><th>WO #</th><th>Title</th><th>Equipment</th><th>Priority</th><th>Status</th><th>Assigned</th><th>Due</th></tr></thead><tbody>
-                    <tr><td><strong>WO-2026-0089</strong></td><td>Hydraulic pump failure — Line 3</td><td>CNC Mill #3</td><td><span class="badge badge-danger">Emergency</span></td><td><span class="badge badge-warning">In Progress</span></td><td>M. Johnson</td><td>Today</td></tr>
-                    <tr><td><strong>WO-2026-0088</strong></td><td>Replace conveyor belt bearings</td><td>Conv. Belt A2</td><td><span class="badge badge-warning">High</span></td><td><span class="badge badge-info">Assigned</span></td><td>T. Wilson</td><td>Apr 10</td></tr>
-                    <tr><td><strong>WO-2026-0087</strong></td><td>Electrical panel inspection</td><td>Main Panel B</td><td><span class="badge badge-info">Medium</span></td><td><span class="badge badge-success">Open</span></td><td>Unassigned</td><td>Apr 12</td></tr>
-                    <tr><td><strong>WO-2026-0085</strong></td><td>Lubrication schedule — all presses</td><td>Press 1-4</td><td><span class="badge badge-success">Low</span></td><td><span class="badge badge-warning">In Progress</span></td><td>S. Davis</td><td>Apr 14</td></tr>
-                </tbody></table></div></div></div>
-                <div class="grid-2">
-                    <div class="card"><div class="card-header"><h3><i class="fas fa-calendar-check" style="color:var(--warning);margin-right:8px;"></i> Upcoming PM Schedule</h3></div><div class="card-body"><div class="table-wrapper"><table class="phoenix-table"><thead><tr><th>Equipment</th><th>Task</th><th>Frequency</th><th>Next Due</th></tr></thead><tbody>
-                        <tr><td>CNC Mill #1</td><td>Spindle alignment check</td><td>Monthly</td><td><span class="badge badge-danger">Overdue</span></td></tr>
-                        <tr><td>Compressor #1</td><td>Oil change & filter</td><td>Quarterly</td><td><span class="badge badge-warning">Apr 10</span></td></tr>
-                        <tr><td>Conv. Belt A1</td><td>Tension & tracking</td><td>Biweekly</td><td><span class="badge badge-info">Apr 12</span></td></tr>
-                    </tbody></table></div></div></div>
-                    <div class="card"><div class="card-header"><h3><i class="fas fa-puzzle-piece" style="color:var(--info);margin-right:8px;"></i> Parts Low Stock</h3></div><div class="card-body"><div class="table-wrapper"><table class="phoenix-table"><thead><tr><th>Part #</th><th>Name</th><th>On Hand</th><th>Reorder</th></tr></thead><tbody>
-                        <tr><td>BRG-6205</td><td>Sealed Bearing 6205-2RS</td><td><span style="color:var(--danger);font-weight:700;">3</span></td><td>10</td></tr>
-                        <tr><td>FLT-HYD-10</td><td>Hydraulic Filter 10um</td><td><span style="color:var(--danger);font-weight:700;">2</span></td><td>8</td></tr>
-                        <tr><td>BLT-V-A68</td><td>V-Belt A68</td><td><span style="color:var(--warning);font-weight:700;">5</span></td><td>6</td></tr>
-                    </tbody></table></div></div></div>
-                </div>
-            </div>
-
-            <!-- ===== PRODUCTION TRACKER DEMO ===== -->
-            <div id="page-production" class="content-area page-content" style="display:none;">
-                <div class="stats-grid">
-                    <div class="stat-card"><div class="stat-icon green"><i class="fas fa-tachometer-alt"></i></div><div class="stat-value">94.2%</div><div class="stat-label">Overall Efficiency</div><div class="stat-change up"><i class="fas fa-arrow-up"></i> 2.1% vs target</div></div>
-                    <div class="stat-card"><div class="stat-icon blue"><i class="fas fa-cubes"></i></div><div class="stat-value">12,480</div><div class="stat-label">Units Produced Today</div><div class="stat-change up"><i class="fas fa-arrow-up"></i> On target</div></div>
-                    <div class="stat-card"><div class="stat-icon amber"><i class="fas fa-star-half-alt"></i></div><div class="stat-value">98.6%</div><div class="stat-label">Quality Rate</div><div class="stat-change up"><i class="fas fa-check"></i> Above threshold</div></div>
-                    <div class="stat-card"><div class="stat-icon red"><i class="fas fa-clock"></i></div><div class="stat-value">47 min</div><div class="stat-label">Total Downtime</div><div class="stat-change down"><i class="fas fa-arrow-down"></i> 12 min less</div></div>
-                </div>
-                <div class="card"><div class="card-header"><h3><i class="fas fa-industry" style="color:var(--accent);margin-right:8px;"></i> Production Lines — Live Status</h3></div><div class="card-body"><div class="table-wrapper"><table class="phoenix-table"><thead><tr><th>Line</th><th>Operator</th><th>Shift</th><th>Product</th><th>Target</th><th>Good</th><th>Reject</th><th>Efficiency</th><th>Status</th></tr></thead><tbody>
-                    <tr><td><strong>Line 1</strong></td><td>J. Martinez</td><td>1st</td><td>Widget A-200</td><td>2,000</td><td>1,842</td><td>12</td><td><span style="color:var(--success);font-weight:700;">92.1%</span></td><td><span class="badge badge-success">Running</span></td></tr>
-                    <tr><td><strong>Line 2</strong></td><td>K. Thompson</td><td>1st</td><td>Bracket B-110</td><td>1,500</td><td>1,488</td><td>4</td><td><span style="color:var(--success);font-weight:700;">99.2%</span></td><td><span class="badge badge-success">Running</span></td></tr>
-                    <tr><td><strong>Line 3</strong></td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td><span class="badge badge-danger">Down</span></td></tr>
-                    <tr><td><strong>Line 4</strong></td><td>R. Chen</td><td>1st</td><td>Housing C-050</td><td>800</td><td>756</td><td>8</td><td><span style="color:var(--success);font-weight:700;">94.5%</span></td><td><span class="badge badge-success">Running</span></td></tr>
-                    <tr><td><strong>Line 5</strong></td><td>A. Patel</td><td>1st</td><td>Connector D-30</td><td>3,000</td><td>2,184</td><td>22</td><td><span style="color:var(--warning);font-weight:700;">72.8%</span></td><td><span class="badge badge-warning">Changeover</span></td></tr>
-                </tbody></table></div></div></div>
-                <div class="grid-2">
-                    <div class="card"><div class="card-header"><h3><i class="fas fa-exclamation-circle" style="color:var(--danger);margin-right:8px;"></i> Downtime Log</h3></div><div class="card-body"><ul class="activity-feed">
-                        <li class="activity-item"><span class="activity-dot red"></span><div><div class="activity-text"><strong>Line 3</strong> — Hydraulic pump failure (Mechanical)</div><div class="activity-time">35 min &bull; Ongoing</div></div></li>
-                        <li class="activity-item"><span class="activity-dot amber"></span><div><div class="activity-text"><strong>Line 5</strong> — Product changeover (Planned)</div><div class="activity-time">12 min &bull; Completed</div></div></li>
-                    </ul></div></div>
-                    <div class="card"><div class="card-header"><h3><i class="fas fa-bug" style="color:var(--warning);margin-right:8px;"></i> Recent Defects</h3></div><div class="card-body"><div class="table-wrapper"><table class="phoenix-table"><thead><tr><th>Line</th><th>Type</th><th>Severity</th><th>Qty</th><th>Disposition</th></tr></thead><tbody>
-                        <tr><td>Line 1</td><td>Surface scratch</td><td><span class="badge badge-info">Minor</span></td><td>8</td><td>Rework</td></tr>
-                        <tr><td>Line 2</td><td>Dimension out of spec</td><td><span class="badge badge-warning">Major</span></td><td>4</td><td>Scrap</td></tr>
-                        <tr><td>Line 5</td><td>Cosmetic blemish</td><td><span class="badge badge-success">Cosmetic</span></td><td>22</td><td>Accept</td></tr>
-                    </tbody></table></div></div></div>
-                </div>
-            </div>
-
-            <!-- ===== CHAT DEMO ===== -->
-            <div id="page-chatdemo" class="content-area page-content" style="display:none;">
-                <div class="grid-3">
-                    <div class="card" style="height:520px;display:flex;flex-direction:column;">
-                        <div class="card-header"><h3><i class="fas fa-comments" style="color:var(--accent);margin-right:8px;"></i> #general</h3><span style="color:var(--text-muted);font-size:12px;">24 members</span></div>
-                        <div class="card-body" style="flex:1;overflow-y:auto;display:flex;flex-direction:column;justify-content:flex-end;">
-                            <div style="margin-bottom:16px;">
-                                <div style="display:flex;gap:10px;margin-bottom:12px;"><div class="user-avatar" style="width:32px;height:32px;font-size:11px;flex-shrink:0;">MJ</div><div><div style="font-size:12px;"><strong>M. Johnson</strong> <span style="color:var(--text-muted);font-size:11px;">10:14 AM</span></div><div style="background:var(--bg-input);padding:10px 14px;border-radius:0 12px 12px 12px;font-size:14px;margin-top:4px;">Line 3 hydraulic pump is down. Any spares in the crib?</div></div></div>
-                                <div style="display:flex;gap:10px;margin-bottom:12px;"><div class="user-avatar" style="width:32px;height:32px;font-size:11px;flex-shrink:0;">SD</div><div><div style="font-size:12px;"><strong>S. Davis</strong> <span style="color:var(--text-muted);font-size:11px;">10:16 AM</span></div><div style="background:var(--bg-input);padding:10px 14px;border-radius:0 12px 12px 12px;font-size:14px;margin-top:4px;">Checking now. I think we have one rebuild kit left.</div></div></div>
-                                <div style="display:flex;gap:10px;margin-bottom:12px;"><div class="user-avatar" style="width:32px;height:32px;font-size:11px;flex-shrink:0;background:linear-gradient(135deg,var(--accent),var(--info));">CC</div><div><div style="font-size:12px;"><strong>Chris Carpenter</strong> <span style="color:var(--text-muted);font-size:11px;">10:18 AM</span></div><div style="background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.2);padding:10px 14px;border-radius:0 12px 12px 12px;font-size:14px;margin-top:4px;">Updated the WO. <strong>@MJ</strong> log the downtime when you can.</div></div></div>
-                                <div style="display:flex;gap:10px;"><div class="user-avatar" style="width:32px;height:32px;font-size:11px;flex-shrink:0;">MJ</div><div><div style="font-size:12px;"><strong>M. Johnson</strong> <span style="color:var(--text-muted);font-size:11px;">10:19 AM</span></div><div style="background:var(--bg-input);padding:10px 14px;border-radius:0 12px 12px 12px;font-size:14px;margin-top:4px;">Done. Logged 35 minutes, keeping it open.</div></div></div>
-                            </div>
-                        </div>
-                        <div style="padding:16px;border-top:1px solid var(--border);display:flex;gap:8px;"><input class="form-control" placeholder="Type a message..." style="flex:1;padding:10px 14px;"><button class="btn btn-primary" style="width:auto;padding:10px 18px;"><i class="fas fa-paper-plane"></i></button></div>
-                    </div>
-                    <div>
-                        <div class="card"><div class="card-header"><h3><i class="fas fa-hashtag" style="color:var(--info);margin-right:8px;"></i> Channels</h3></div><div class="card-body" style="padding:8px;">
-                            <div class="nav-item active" style="margin:0;"><i class="fas fa-hashtag"></i> general <span class="nav-badge">3</span></div>
-                            <div class="nav-item" style="margin:0;"><i class="fas fa-hashtag"></i> it-support</div>
-                            <div class="nav-item" style="margin:0;"><i class="fas fa-hashtag"></i> maintenance</div>
-                            <div class="nav-item" style="margin:0;"><i class="fas fa-hashtag"></i> shipping</div>
-                        </div></div>
-                        <div class="card"><div class="card-header"><h3><i class="fas fa-circle" style="color:var(--success);margin-right:8px;font-size:10px;"></i> Online</h3></div><div class="card-body" style="padding:8px;">
-                            <div style="display:flex;align-items:center;gap:8px;padding:6px 12px;"><span style="width:8px;height:8px;border-radius:50%;background:var(--success);"></span> Chris Carpenter</div>
-                            <div style="display:flex;align-items:center;gap:8px;padding:6px 12px;"><span style="width:8px;height:8px;border-radius:50%;background:var(--success);"></span> M. Johnson</div>
-                            <div style="display:flex;align-items:center;gap:8px;padding:6px 12px;"><span style="width:8px;height:8px;border-radius:50%;background:var(--success);"></span> S. Davis</div>
-                            <div style="display:flex;align-items:center;gap:8px;padding:6px 12px;"><span style="width:8px;height:8px;border-radius:50%;background:var(--warning);"></span> T. Wilson <span style="font-size:11px;color:var(--text-muted);">(away)</span></div>
-                        </div></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ===== SCHEDULING DEMO ===== -->
-            <div id="page-schedules" class="content-area page-content" style="display:none;">
-                <div class="stats-grid">
-                    <div class="stat-card"><div class="stat-icon blue"><i class="fas fa-users"></i></div><div class="stat-value">34</div><div class="stat-label">Scheduled This Week</div></div>
-                    <div class="stat-card"><div class="stat-icon amber"><i class="fas fa-exchange-alt"></i></div><div class="stat-value">3</div><div class="stat-label">Pending Swap Requests</div></div>
-                    <div class="stat-card"><div class="stat-icon green"><i class="fas fa-umbrella-beach"></i></div><div class="stat-value">2</div><div class="stat-label">Time-Off This Week</div></div>
-                    <div class="stat-card"><div class="stat-icon red"><i class="fas fa-business-time"></i></div><div class="stat-value">6</div><div class="stat-label">Overtime Hours</div></div>
-                </div>
-                <div class="card"><div class="card-header"><h3><i class="fas fa-calendar-alt" style="color:var(--accent);margin-right:8px;"></i> Week of April 7 — 13, 2026</h3><div style="display:flex;gap:8px;"><button class="btn btn-sm btn-outline"><i class="fas fa-chevron-left"></i></button><button class="btn btn-sm btn-outline"><i class="fas fa-chevron-right"></i></button><button class="btn btn-sm btn-primary"><i class="fas fa-plus"></i> Add Shift</button></div></div><div class="card-body"><div class="table-wrapper"><table class="phoenix-table"><thead><tr><th>Employee</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th></tr></thead><tbody>
-                    <tr><td><strong>J. Martinez</strong></td><td><span class="badge badge-success">1st</span></td><td><span class="badge badge-success">1st</span></td><td><span class="badge badge-success">1st</span></td><td><span class="badge badge-success">1st</span></td><td><span class="badge badge-success">1st</span></td><td>—</td><td>—</td></tr>
-                    <tr><td><strong>K. Thompson</strong></td><td><span class="badge badge-success">1st</span></td><td><span class="badge badge-success">1st</span></td><td><span class="badge badge-warning">OT</span></td><td><span class="badge badge-success">1st</span></td><td><span class="badge badge-success">1st</span></td><td><span class="badge badge-warning">OT</span></td><td>—</td></tr>
-                    <tr><td><strong>M. Johnson</strong></td><td><span class="badge badge-info">2nd</span></td><td><span class="badge badge-info">2nd</span></td><td><span class="badge badge-info">2nd</span></td><td><span class="badge badge-info">2nd</span></td><td><span class="badge badge-info">2nd</span></td><td>—</td><td>—</td></tr>
-                    <tr><td><strong>S. Davis</strong></td><td><span class="badge badge-info">2nd</span></td><td><span style="color:var(--accent);font-size:12px;"><i class="fas fa-umbrella-beach"></i> PTO</span></td><td><span style="color:var(--accent);font-size:12px;"><i class="fas fa-umbrella-beach"></i> PTO</span></td><td><span class="badge badge-info">2nd</span></td><td><span class="badge badge-info">2nd</span></td><td>—</td><td>—</td></tr>
-                    <tr><td><strong>R. Chen</strong></td><td style="background:rgba(139,92,246,0.1);"><span class="badge" style="background:rgba(139,92,246,0.2);color:#8b5cf6;">3rd</span></td><td style="background:rgba(139,92,246,0.1);"><span class="badge" style="background:rgba(139,92,246,0.2);color:#8b5cf6;">3rd</span></td><td style="background:rgba(139,92,246,0.1);"><span class="badge" style="background:rgba(139,92,246,0.2);color:#8b5cf6;">3rd</span></td><td style="background:rgba(139,92,246,0.1);"><span class="badge" style="background:rgba(139,92,246,0.2);color:#8b5cf6;">3rd</span></td><td style="background:rgba(139,92,246,0.1);"><span class="badge" style="background:rgba(139,92,246,0.2);color:#8b5cf6;">3rd</span></td><td>—</td><td>—</td></tr>
-                </tbody></table></div></div></div>
-            </div>
-
-            <!-- ===== REPORTS DEMO ===== -->
-            <div id="page-reports" class="content-area page-content" style="display:none;">
-                <div class="stats-grid">
-                    <div class="stat-card"><div class="stat-icon amber"><i class="fas fa-file-alt"></i></div><div class="stat-value">24</div><div class="stat-label">Saved Reports</div></div>
-                    <div class="stat-card"><div class="stat-icon blue"><i class="fas fa-clock"></i></div><div class="stat-value">8</div><div class="stat-label">Scheduled Deliveries</div></div>
-                    <div class="stat-card"><div class="stat-icon green"><i class="fas fa-play-circle"></i></div><div class="stat-value">142</div><div class="stat-label">Executions This Month</div></div>
-                    <div class="stat-card"><div class="stat-icon red"><i class="fas fa-bolt"></i></div><div class="stat-value">230ms</div><div class="stat-label">Avg Execution Time</div></div>
-                </div>
-                <div class="card"><div class="card-header"><h3><i class="fas fa-chart-pie" style="color:var(--accent);margin-right:8px;"></i> Report Library</h3><button class="btn btn-sm btn-primary"><i class="fas fa-plus"></i> New Report</button></div><div class="card-body"><div class="table-wrapper"><table class="phoenix-table"><thead><tr><th>Report</th><th>Category</th><th>Type</th><th>Schedule</th><th>Last Run</th><th>Actions</th></tr></thead><tbody>
-                    <tr><td><strong>Daily Production Summary</strong></td><td>Production</td><td><span class="badge badge-info">Table</span></td><td><span class="badge badge-success">Daily 6AM</span></td><td>Today 06:00</td><td><button class="btn btn-sm btn-outline"><i class="fas fa-play"></i> Run</button> <button class="btn btn-sm btn-outline"><i class="fas fa-download"></i> PDF</button></td></tr>
-                    <tr><td><strong>Inventory Valuation</strong></td><td>Inventory</td><td><span class="badge badge-warning">Summary</span></td><td><span class="badge badge-success">Weekly Mon</span></td><td>Apr 7 08:00</td><td><button class="btn btn-sm btn-outline"><i class="fas fa-play"></i> Run</button> <button class="btn btn-sm btn-outline"><i class="fas fa-download"></i> XLSX</button></td></tr>
-                    <tr><td><strong>Equipment Downtime Analysis</strong></td><td>Maintenance</td><td><span class="badge badge-info">Chart</span></td><td><span class="badge badge-success">Monthly 1st</span></td><td>Apr 1 08:00</td><td><button class="btn btn-sm btn-outline"><i class="fas fa-play"></i> Run</button> <button class="btn btn-sm btn-outline"><i class="fas fa-download"></i> PDF</button></td></tr>
-                    <tr><td><strong>Overtime Hours by Employee</strong></td><td>Scheduling</td><td><span class="badge badge-info">Table</span></td><td>—</td><td>Apr 6 14:22</td><td><button class="btn btn-sm btn-outline"><i class="fas fa-play"></i> Run</button> <button class="btn btn-sm btn-outline"><i class="fas fa-download"></i> CSV</button></td></tr>
-                    <tr><td><strong>Quality Rate Trends</strong></td><td>Production</td><td><span class="badge badge-info">Chart</span></td><td><span class="badge badge-success">Weekly Fri</span></td><td>Apr 4 08:00</td><td><button class="btn btn-sm btn-outline"><i class="fas fa-play"></i> Run</button> <button class="btn btn-sm btn-outline"><i class="fas fa-download"></i> PDF</button></td></tr>
-                </tbody></table></div></div></div>
-            </div>
-
-            <div id="page-modules" class="content-area page-content" style="display:none;">
-                <div style="margin-bottom:24px;">
-                    <p style="color:var(--text-secondary);font-size:15px;">Extend PhoenixPHP with plug-and-play modules. Each module includes database schema, REST API endpoints, dashboard views, and full documentation. Base framework: <strong style="color:var(--accent);">$40</strong> | Each module: <strong style="color:var(--accent);">$20</strong></p>
-                </div>
-
+            <!-- REPORTS -->
+            <div id="page-reports" class="content-area page-content" style="display:none">
+                <div style="margin-bottom:24px"><h3>Report Library</h3></div>
                 <div class="module-grid">
-                    <!-- Inventory Management -->
-                    <div class="module-card">
-                        <div class="module-card-header">
-                            <div class="module-icon" style="background:rgba(16,185,129,0.15);color:#10b981;"><i class="fas fa-boxes"></i></div>
-                            <div><h3>Inventory Management</h3><span class="module-version">v1.0.0 &bull; 24 API endpoints</span></div>
-                        </div>
-                        <p class="module-description">Complete inventory tracking with receiving, fulfillment, stock levels, barcode scanning, and supplier management.</p>
-                        <ul class="module-features">
-                            <li>Real-time stock levels across multiple locations</li>
-                            <li>Receiving workflow with PO matching</li>
-                            <li>Pick/pack/ship fulfillment</li>
-                            <li>Low-stock alerts and reorder points</li>
-                            <li>Barcode scanner integration</li>
-                            <li>Supplier management with lead times</li>
-                        </ul>
-                        <div class="module-footer">
-                            <span class="module-price">$20</span>
-                            <a href="https://cdacprogramming.gumroad.com/l/Phoenix-PHP-Inventory" target="_blank" class="btn btn-sm btn-primary"><i class="fas fa-shopping-cart"></i> Buy $20</a>
-                        </div>
-                    </div>
-
-                    <!-- CMMS -->
-                    <div class="module-card">
-                        <div class="module-card-header">
-                            <div class="module-icon" style="background:rgba(59,130,246,0.15);color:#3b82f6;"><i class="fas fa-wrench"></i></div>
-                            <div><h3>CMMS — Maintenance</h3><span class="module-version">v1.0.0 &bull; 20 API endpoints</span></div>
-                        </div>
-                        <p class="module-description">Computerized Maintenance Management System. Work orders, preventive maintenance, equipment tracking, and parts inventory.</p>
-                        <ul class="module-features">
-                            <li>Work order creation and assignment</li>
-                            <li>Preventive maintenance scheduling</li>
-                            <li>Equipment asset registry</li>
-                            <li>Parts inventory linked to work orders</li>
-                            <li>Downtime and cost tracking</li>
-                            <li>Priority levels and status workflow</li>
-                        </ul>
-                        <div class="module-footer">
-                            <span class="module-price">$20</span>
-                            <a href="https://cdacprogramming.gumroad.com/l/Phoenix-PHP-Maintenance" target="_blank" class="btn btn-sm btn-primary"><i class="fas fa-shopping-cart"></i> Buy $20</a>
-                        </div>
-                    </div>
-
-                    <!-- Production Tracker -->
-                    <div class="module-card">
-                        <div class="module-card-header">
-                            <div class="module-icon" style="background:rgba(139,92,246,0.15);color:#8b5cf6;"><i class="fas fa-industry"></i></div>
-                            <div><h3>Production Tracker</h3><span class="module-version">v1.0.0 &bull; 18 API endpoints</span></div>
-                        </div>
-                        <p class="module-description">Track production output, quality metrics, operator assignments, and shift data across multiple lines or machines.</p>
-                        <ul class="module-features">
-                            <li>Multi-line/machine production tracking</li>
-                            <li>Operator shift assignments and handoffs</li>
-                            <li>Real-time output and efficiency metrics</li>
-                            <li>Quality rate tracking with defect categories</li>
-                            <li>Downtime logging with reason codes</li>
-                            <li>Configurable KPI dashboards</li>
-                        </ul>
-                        <div class="module-footer">
-                            <span class="module-price">$20</span>
-                            <a href="https://cdacprogramming.gumroad.com/l/Phoenix-PHP-Production" target="_blank" class="btn btn-sm btn-primary"><i class="fas fa-shopping-cart"></i> Buy $20</a>
-                        </div>
-                    </div>
-
-                    <!-- Chat System -->
-                    <div class="module-card">
-                        <div class="module-card-header">
-                            <div class="module-icon" style="background:rgba(6,182,212,0.15);color:#06b6d4;"><i class="fas fa-comments"></i></div>
-                            <div><h3>Internal Chat</h3><span class="module-version">v1.0.0 &bull; 16 API endpoints</span></div>
-                        </div>
-                        <p class="module-description">Real-time internal messaging with channels, direct messages, file attachments, and notification integration.</p>
-                        <ul class="module-features">
-                            <li>Channel-based group messaging</li>
-                            <li>Direct messages between users</li>
-                            <li>Unread count badges and notifications</li>
-                            <li>File and image attachments</li>
-                            <li>Message search and history</li>
-                            <li>User presence indicators</li>
-                        </ul>
-                        <div class="module-footer">
-                            <span class="module-price">$20</span>
-                            <a href="https://cdacprogramming.gumroad.com/l/Phoenix-PHP-Chat" target="_blank" class="btn btn-sm btn-primary"><i class="fas fa-shopping-cart"></i> Buy $20</a>
-                        </div>
-                    </div>
-
-                    <!-- Scheduling -->
-                    <div class="module-card">
-                        <div class="module-card-header">
-                            <div class="module-icon" style="background:rgba(236,72,153,0.15);color:#ec4899;"><i class="fas fa-calendar-alt"></i></div>
-                            <div><h3>Shift Scheduling</h3><span class="module-version">v1.0.0 &bull; 14 API endpoints</span></div>
-                        </div>
-                        <p class="module-description">Employee shift scheduling with calendar view, availability tracking, shift swaps, and overtime calculations.</p>
-                        <ul class="module-features">
-                            <li>Visual shift calendar</li>
-                            <li>Employee availability management</li>
-                            <li>Shift swap requests and approvals</li>
-                            <li>Overtime tracking and alerts</li>
-                            <li>Schedule templates</li>
-                            <li>Time-off request integration</li>
-                        </ul>
-                        <div class="module-footer">
-                            <span class="module-price">$20</span>
-                            <a href="https://cdacprogramming.gumroad.com/l/Phoenix-PHP-Schedule" target="_blank" class="btn btn-sm btn-primary"><i class="fas fa-shopping-cart"></i> Buy $20</a>
-                        </div>
-                    </div>
-
-                    <!-- Report Builder -->
-                    <div class="module-card">
-                        <div class="module-card-header">
-                            <div class="module-icon" style="background:rgba(245,158,11,0.15);color:#f59e0b;"><i class="fas fa-chart-pie"></i></div>
-                            <div><h3>Report Builder</h3><span class="module-version">v1.0.0 &bull; 12 API endpoints</span></div>
-                        </div>
-                        <p class="module-description">Dynamic report builder with custom queries, scheduled reports, PDF/Excel export, and interactive Chart.js dashboards.</p>
-                        <ul class="module-features">
-                            <li>Visual report builder</li>
-                            <li>Custom SQL query editor</li>
-                            <li>Scheduled report generation</li>
-                            <li>PDF and Excel export</li>
-                            <li>Interactive Chart.js dashboards</li>
-                            <li>Cross-module data access</li>
-                        </ul>
-                        <div class="module-footer">
-                            <span class="module-price">$20</span>
-                            <a href="https://cdacprogramming.gumroad.com/l/Phoenix-PHP-Reports" target="_blank" class="btn btn-sm btn-primary"><i class="fas fa-shopping-cart"></i> Buy $20</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-body" style="text-align:center;padding:32px;">
-                        <h3 style="margin-bottom:8px;">Bundle &amp; Save</h3>
-                        <p style="color:var(--text-secondary);margin-bottom:16px;">Get the base framework + all 6 modules for <span style="text-decoration:line-through;color:var(--text-muted);">$160</span> <strong style="color:var(--accent);font-size:24px;">$99</strong></p>
-                        <a href="https://cdacprogramming.gumroad.com/l/Phoenix-PHP-Bundle" target="_blank" class="btn btn-primary" style="width:auto;padding:14px 48px;text-decoration:none;"><i class="fas fa-shopping-cart"></i> Get Complete Bundle</a>
-                    </div>
+                    <div class="module-card"><div class="module-card-header"><div><h3>Monthly Production Summary</h3><span class="module-version">Production</span></div></div><div class="module-description">Output, efficiency, and downtime aggregates per line per month.</div><div class="module-footer"><span class="badge badge-info">Table</span><button class="btn btn-sm btn-outline">Run</button></div></div>
+                    <div class="module-card"><div class="module-card-header"><div><h3>Equipment Health Report</h3><span class="module-version">Maintenance</span></div></div><div class="module-description">Work order history, PM compliance, and downtime per asset.</div><div class="module-footer"><span class="badge badge-info">Chart</span><button class="btn btn-sm btn-outline">Run</button></div></div>
+                    <div class="module-card"><div class="module-card-header"><div><h3>Inventory Valuation</h3><span class="module-version">Inventory</span></div></div><div class="module-description">Current stock value by category, cost trends, and reorder status.</div><div class="module-footer"><span class="badge badge-info">Summary</span><button class="btn btn-sm btn-outline">Run</button></div></div>
                 </div>
             </div>
 
-            <div id="page-settings" class="content-area page-content" style="display:none;">
+            <!-- USERS & RBAC -->
+            <div id="page-users" class="content-area page-content" style="display:none">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px">
+                    <h3>Users &amp; RBAC</h3>
+                    <button class="btn btn-sm btn-primary">+ Create User</button>
+                </div>
                 <div class="card">
-                    <div class="card-header"><h3><i class="fas fa-cog" style="color:var(--accent);margin-right:8px;"></i> Application Settings</h3><button class="btn btn-sm btn-primary"><i class="fas fa-save"></i> Save</button></div>
+                    <div class="card-header"><h3>User List</h3></div>
+                    <div class="card-body"><div class="table-wrapper"><table class="phoenix-table"><thead><tr><th>Username</th><th>Full Name</th><th>Role</th><th>Groups</th><th>Status</th><th>Last Login</th></tr></thead><tbody>
+                        <tr><td><strong>admin</strong></td><td>Administrator</td><td>SuperAdmin</td><td><span class="badge badge-danger">SuperAdmin</span></td><td><span class="badge badge-success">Active</span></td><td>Just now</td></tr>
+                        <tr><td>mike.t</td><td>Mike Thompson</td><td>Maintenance</td><td><span class="badge badge-info">Maintenance</span></td><td><span class="badge badge-success">Active</span></td><td>10:38 AM</td></tr>
+                        <tr><td>sarah.k</td><td>Sarah Kim</td><td>Supervisor</td><td><span class="badge badge-warning">Supervisor</span> <span class="badge badge-info">Operator</span></td><td><span class="badge badge-success">Active</span></td><td>10:42 AM</td></tr>
+                        <tr><td>dave.r</td><td>Dave Rodriguez</td><td>Operator</td><td><span class="badge badge-info">Operator</span></td><td><span class="badge badge-success">Active</span></td><td>10:20 AM</td></tr>
+                        <tr><td>lab.user</td><td>Lab Technician</td><td>Lab</td><td><span class="badge badge-info">Lab</span> <span class="badge badge-info">Inspection</span></td><td><span class="badge badge-warning">Pending</span></td><td>Never</td></tr>
+                    </tbody></table></div></div>
+                </div>
+                <div class="card" style="margin-top:24px">
+                    <div class="card-header"><h3>Permission Matrix</h3></div>
+                    <div class="card-body"><div class="table-wrapper"><table class="phoenix-table"><thead><tr><th>Permission</th><th>SuperAdmin</th><th>Admin</th><th>Supervisor</th><th>Operator</th><th>Maintenance</th></tr></thead><tbody>
+                        <tr><td>production.read</td><td style="color:var(--success)">&#x2714;</td><td style="color:var(--success)">&#x2714;</td><td style="color:var(--success)">&#x2714;</td><td style="color:var(--success)">&#x2714;</td><td>&#x2718;</td></tr>
+                        <tr><td>production.write</td><td style="color:var(--success)">&#x2714;</td><td style="color:var(--success)">&#x2714;</td><td style="color:var(--success)">&#x2714;</td><td>&#x2718;</td><td>&#x2718;</td></tr>
+                        <tr><td>maintenance.read</td><td style="color:var(--success)">&#x2714;</td><td style="color:var(--success)">&#x2714;</td><td style="color:var(--success)">&#x2714;</td><td>&#x2718;</td><td style="color:var(--success)">&#x2714;</td></tr>
+                        <tr><td>maintenance.write</td><td style="color:var(--success)">&#x2714;</td><td style="color:var(--success)">&#x2714;</td><td>&#x2718;</td><td>&#x2718;</td><td style="color:var(--success)">&#x2714;</td></tr>
+                        <tr><td>users.write</td><td style="color:var(--success)">&#x2714;</td><td style="color:var(--success)">&#x2714;</td><td>&#x2718;</td><td>&#x2718;</td><td>&#x2718;</td></tr>
+                    </tbody></table></div></div>
+                </div>
+            </div>
+
+            <!-- SETTINGS -->
+            <div id="page-settings" class="content-area page-content" style="display:none">
+                <h3 style="margin-bottom:24px">Settings</h3>
+                <div class="card">
+                    <div class="card-header"><h3>General</h3></div>
                     <div class="card-body">
-                        <div class="form-group"><label>Application Name</label><input class="form-control" value="PhoenixPHP Application"></div>
-                        <div class="form-group"><label>Environment</label><input class="form-control" value="production"></div>
-                        <div class="form-group"><label>Debug Mode</label><input class="form-control" value="false"></div>
-                        <div class="form-group"><label>Session Lifetime (minutes)</label><input class="form-control" value="720"></div>
-                        <div class="form-group"><label>Cache Driver</label><input class="form-control" value="redis"></div>
-                        <div class="form-group"><label>Rate Limit (API requests/hour)</label><input class="form-control" value="100"></div>
+                        <div class="form-group"><label>Application Name</label><input type="text" class="form-control" value="Phoenix ERP"></div>
+                        <div class="form-group"><label>Default Theme</label><select class="form-control"><option>Dark</option><option>Light</option><option>System</option></select></div>
+                        <div class="form-group"><label>Session Timeout (minutes)</label><input type="number" class="form-control" value="30"></div>
+                        <button class="btn btn-primary" style="width:auto">Save Settings</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3>Security</h3></div>
+                    <div class="card-body">
+                        <div class="status-row"><span class="status-label"><span class="status-indicator online"></span>CSRF Protection</span><span class="badge badge-success">Enabled</span></div>
+                        <div class="status-row"><span class="status-label"><span class="status-indicator online"></span>Brute-Force Protection</span><span class="badge badge-success">5 attempts / 15min lockout</span></div>
+                        <div class="status-row"><span class="status-label"><span class="status-indicator online"></span>Session Security</span><span class="badge badge-success">HttpOnly + SameSite</span></div>
+                        <div class="status-row"><span class="status-label"><span class="status-indicator online"></span>Input Validation</span><span class="badge badge-success">Enabled</span></div>
+                        <div class="status-row"><span class="status-label"><span class="status-indicator online"></span>Rate Limiting</span><span class="badge badge-success">Enabled</span></div>
                     </div>
                 </div>
             </div>
         </main>
     </div>
 
-    <!-- Mobile overlay -->
-    <div class="mobile-overlay" id="mobileOverlay" onclick="toggleMobileMenu()"></div>
+    <div class="mobile-overlay" id="overlay" onclick="document.getElementById('sidebar').classList.remove('open');this.classList.remove('active')"></div>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-    <script src="js/phoenix.js"></script>
     <script>
-        function toggleMobileMenu() {
-            document.querySelector('.sidebar').classList.toggle('open');
-            document.getElementById('mobileOverlay').classList.toggle('active');
-        }
-        // Close sidebar on nav click (mobile)
-        document.querySelectorAll('.nav-item').forEach(item => {
-            item.addEventListener('click', () => {
-                if (window.innerWidth <= 1024) toggleMobileMenu();
-            });
+    // Page navigation
+    document.querySelectorAll('[data-page]').forEach(function(link) {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            showPage(this.getAttribute('data-page'));
         });
+    });
+
+    function showPage(name) {
+        document.querySelectorAll('.page-content').forEach(function(p) { p.style.display = 'none'; });
+        var target = document.getElementById('page-' + name);
+        if (target) target.style.display = 'block';
+
+        document.querySelectorAll('[data-page]').forEach(function(n) {
+            n.classList.toggle('active', n.getAttribute('data-page') === name);
+        });
+
+        var titles = {
+            'dashboard': 'Dashboard', 'cmms': 'Maintenance (CMMS)', 'inventory': 'Inventory',
+            'production': 'Production', 'chat': 'Chat', 'scheduling': 'Scheduling',
+            'reports': 'Reports', 'users': 'Users & RBAC', 'settings': 'Settings'
+        };
+        document.getElementById('pageTitle').textContent = titles[name] || 'Dashboard';
+
+        // Close mobile sidebar
+        document.getElementById('sidebar').classList.remove('open');
+        document.getElementById('overlay').classList.remove('active');
+    }
+
+    // Theme toggle
+    function toggleTheme() {
+        var html = document.documentElement;
+        var current = html.getAttribute('data-theme');
+        var next = current === 'dark' ? 'light' : 'dark';
+        html.setAttribute('data-theme', next);
+        localStorage.setItem('phoenix-theme', next);
+        document.getElementById('themeBtn').innerHTML = next === 'dark' ? '&#x2600;' : '&#x263D;';
+    }
+
+    // Date display
+    document.getElementById('dateDisplay').textContent = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+    // Chart
+    setTimeout(function() {
+        var ctx = document.getElementById('overviewChart');
+        if (ctx) {
+            var style = getComputedStyle(document.documentElement);
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    datasets: [{
+                        label: 'API Requests',
+                        data: [3200, 4100, 3800, 4500, 5200, 2100, 1800],
+                        borderColor: style.getPropertyValue('--accent').trim() || '#f59e0b',
+                        backgroundColor: 'rgba(245,158,11,0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }, {
+                        label: 'Active Users',
+                        data: [85, 92, 88, 95, 102, 45, 38],
+                        borderColor: style.getPropertyValue('--info').trim() || '#3b82f6',
+                        backgroundColor: 'rgba(59,130,246,0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { labels: { color: style.getPropertyValue('--text-secondary').trim() || '#8892b0' } } },
+                    scales: {
+                        x: { ticks: { color: style.getPropertyValue('--text-muted').trim() }, grid: { color: 'rgba(255,255,255,0.05)' } },
+                        y: { ticks: { color: style.getPropertyValue('--text-muted').trim() }, grid: { color: 'rgba(255,255,255,0.05)' } }
+                    }
+                }
+            });
+        }
+    }, 100);
+
+    // Set initial theme button
+    (function() {
+        var t = document.documentElement.getAttribute('data-theme');
+        document.getElementById('themeBtn').innerHTML = t === 'dark' ? '&#x2600;' : '&#x263D;';
+    })();
     </script>
 </body>
 </html>

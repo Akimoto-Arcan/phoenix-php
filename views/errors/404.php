@@ -1,4 +1,4 @@
-<?php \Phoenix\View::extends('auth'); $pageTitle = '404 Not Found'; ?>
+<?php \Phoenix\View::layout('auth'); $pageTitle = '404 Not Found'; ?>
 <div class="login-card" style="text-align:center">
     <div style="font-size:72px;margin-bottom:16px;opacity:0.5">404</div>
     <h2 style="margin-bottom:8px">Page Not Found</h2>

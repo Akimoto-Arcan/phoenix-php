@@ -13,12 +13,6 @@ if (!file_exists($installLock)) {
 // Bootstrap the application
 require_once __DIR__ . '/bootstrap.php';
 
-// Class aliases for new classes
-class_alias('Phoenix\Router', 'Router');
-class_alias('Phoenix\View', 'View');
-class_alias('Phoenix\Settings', 'Settings');
-class_alias('Phoenix\ModuleLoader', 'ModuleLoader');
-
 // Initialize view engine
 \Phoenix\View::init(__DIR__);
 

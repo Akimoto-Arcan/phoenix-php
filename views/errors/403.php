@@ -1,4 +1,4 @@
-<?php \Phoenix\View::extends('auth'); $pageTitle = '403 Forbidden'; ?>
+<?php \Phoenix\View::layout('auth'); $pageTitle = '403 Forbidden'; ?>
 <div class="login-card" style="text-align:center">
     <div style="font-size:72px;margin-bottom:16px;opacity:0.5">403</div>
     <h2 style="margin-bottom:8px">Access Denied</h2>

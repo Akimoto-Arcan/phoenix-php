@@ -850,3 +850,10 @@ html[data-theme="light"] .login-card {
     border-color: rgba(0,0,0,0.08);
     box-shadow: 0 20px 60px rgba(0,0,0,0.15);
 }
+
+html[data-theme="light"] .activity-item,
+html[data-theme="light"] .status-row {
+    border-bottom-color: var(--border);
+}
+
+.badge-outline { background: transparent; border: 1px solid var(--border); color: var(--text-secondary); }
