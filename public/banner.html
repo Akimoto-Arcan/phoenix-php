@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            width: 1500px;
+            height: 500px;
+            background: #0f0f1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Inter', sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+        /* Background glow effects */
+        body::before {
+            content: '';
+            position: absolute;
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle, rgba(245,158,11,0.12), transparent 70%);
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+        }
+        body::after {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(59,130,246,0.06), transparent 70%);
+            right: 100px;
+            bottom: -100px;
+            border-radius: 50%;
+        }
+        /* Grid lines decoration */
+        .grid-lines {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image:
+                linear-gradient(rgba(245,158,11,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(245,158,11,0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+        .container {
+            display: flex;
+            align-items: center;
+            gap: 48px;
+            position: relative;
+            z-index: 1;
+        }
+        .icon {
+            font-size: 120px;
+            color: #f59e0b;
+            filter: drop-shadow(0 0 30px rgba(245,158,11,0.4)) drop-shadow(0 0 60px rgba(245,158,11,0.15));
+        }
+        .divider {
+            width: 2px;
+            height: 180px;
+            background: linear-gradient(transparent, rgba(245,158,11,0.3), transparent);
+        }
+        .text-block {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        h1 {
+            font-size: 72px;
+            font-weight: 800;
+            color: #e8e8f0;
+            letter-spacing: -2px;
+            line-height: 1;
+        }
+        h1 span { color: #f59e0b; }
+        .tagline {
+            font-size: 18px;
+            color: #8892b0;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+        .tagline strong { color: #f59e0b; }
+        .badges {
+            display: flex;
+            gap: 10px;
+            margin-top: 8px;
+        }
+        .badge {
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        .badge-amber { background: rgba(245,158,11,0.15); color: #f59e0b; }
+        .badge-blue { background: rgba(59,130,246,0.15); color: #3b82f6; }
+        .badge-green { background: rgba(16,185,129,0.15); color: #10b981; }
+        .brand {
+            position: absolute;
+            bottom: 30px;
+            right: 40px;
+            font-size: 14px;
+            color: #5a6380;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-lines"></div>
+    <div class="container">
+        <div class="icon"><i class="fas fa-fire"></i></div>
+        <div class="divider"></div>
+        <div class="text-block">
+            <h1>Phoenix<span>PHP</span></h1>
+            <div class="tagline">Production-Ready PHP Framework &bull; <strong>104 API Endpoints</strong> &bull; 6 Modules</div>
+            <div class="badges">
+                <span class="badge badge-amber">Auth + RBAC</span>
+                <span class="badge badge-blue">Multi-DB MySQL</span>
+                <span class="badge badge-green">REST API</span>
+                <span class="badge badge-amber">Caching</span>
+                <span class="badge badge-blue">Security</span>
+                <span class="badge badge-green">Modular</span>
+            </div>
+        </div>
+    </div>
+    <div class="brand">CDAC Programming</div>
+</body>
+</html>
